@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import Header from '../Header/header';
 import Recipe from '../Recipe/recipe';
+import Recipes from '../recipes';
 
 class RecipeList extends Component {
     render () {
-        const Recipes = [
-            {id: 1, name: 'Sweet Potato Casserole', category: 'Dinner Side', rating: 5},
-            {id: 2, name: 'Tacos', category: 'Dinner Main', rating: 4}
-        ]
         const recipes = Recipes.map((recipe, index) => {
             return <Recipe key={index} recipe={recipe} />
         })

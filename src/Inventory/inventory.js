@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import InventoryItem from '../InventoryItem/inventory-item';
 import Header from '../Header/header';
+import Items from '../items';
 
 class Inventory extends Component {
-
     render (){
-        const Items = [
-            {name: 'potatoes', qty: 5, unit: 'ea'},
-            {name: 'milk', qty: 1, unit: 'gal'}
-        ];
         const inventory = Items.map((item, index) => {
             return <InventoryItem item={item} key={index} />
         })

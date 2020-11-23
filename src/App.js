@@ -5,6 +5,10 @@ import Inventory from './Inventory/inventory';
 import RecipeList from './RecipeList/recipe-list';
 import SignUp from './SignUp/sign-up';
 import LogIn from './LogIn/log-in';
+import RecipeDetail from './RecipeDetail/recipe-detail';
+import ItemDetail from './ItemDetail/item-detail';
+import EditItem from './EditItem/edit-item';
+import EditRecipe from './EditRecipe/edit-recipe';
 
 function App() {
   return (
@@ -14,12 +18,28 @@ function App() {
         component={Home}
       />
       <Route 
-        path='/inventory'
+        exact path='/inventory'
         component={Inventory}
+      />
+      <Route
+        exact path='/inventory/:id'
+        component={ItemDetail}
+      />
+      <Route
+        path='/inventory/:id/edit'
+        component={EditItem}
       />
       <Route
         exact path='/recipes'
         component={RecipeList}
+      />
+      <Route
+        exact path='/recipes/:id'
+        component={RecipeDetail}
+      />
+      <Route 
+        path='/recipes/:id/edit'
+        component={EditRecipe}
       />
       <Route
         path='/sign-up'
