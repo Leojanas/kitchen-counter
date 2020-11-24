@@ -9,6 +9,7 @@ import RecipeDetail from './RecipeDetail/recipe-detail';
 import ItemDetail from './ItemDetail/item-detail';
 import EditItem from './EditItem/edit-item';
 import EditRecipe from './EditRecipe/edit-recipe';
+import AddItem from './AddItem/add-item';
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
       <Route 
         exact path='/inventory'
         component={Inventory}
+      />
+      <Route
+        path='/inventory-add'
+        component={AddItem}
       />
       <Route
         exact path='/inventory/:id'

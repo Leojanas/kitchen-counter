@@ -9,28 +9,54 @@ class EditRecipe extends Component {
          let recipe = Recipes.filter(r => {
             return r.id === Number(this.props.match.params.id)
         })[0]
-        let ingredients = recipe.ingredients.map((ingredient, index) => {
-            return <FormIngredient item={ingredient} key={index} />
-        })
-        let instructions = recipe.instructions
         this.state = {
-            ingredients: ingredients,
             recipe: recipe
         }
      }   
 
     
     handleAddIngredient = () => {
-        let ingredients = this.state.ingredients;
-        ingredients.push(<FormIngredient />)
+        let emptyIngredient = {
+            id: (this.state.recipe.ingredients.length + 1),
+            name: '',
+            qty: 0,
+            unit: ''
+        }
+        let recipe = this.state.recipe;
+        let ingredients = recipe.ingredients;
+        ingredients.push(emptyIngredient);
+        recipe = {...recipe, ingredients};
         this.setState({
-            ingredients
+            recipe
         })
     }
     handleAddStep = () => {
-
+        let newStep = {
+            number: (this.state.recipe.instructions.length + 1),
+            content: ''
+        }
+        let recipe = this.state.recipe;
+        let instructions = recipe.instructions;
+        instructions.push(newStep)
+        recipe = {...recipe, instructions}
+        this.setState({
+            recipe
+        })
     }
     render() {
+        let formIngredients;
+        let formInstructions;
+        formIngredients = this.state.recipe.ingredients.map((i, index) => {
+            return <FormIngredient item={i} key={index} />
+        })
+        formInstructions = this.state.recipe.instructions.map((i, index) => {
+            return (
+                <tr key={index}>
+                <td>Step {index + 1}</td>
+                <td><input defaultValue={i.content}/></td>
+                </tr>
+            )
+        })
         return(
             <div>
                 <Header />
@@ -47,7 +73,7 @@ class EditRecipe extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.ingredients}
+                            {formIngredients}
                         </tbody>
                     </table>
                     <button type='button' onClick={this.handleAddIngredient}>Add Ingredient</button>
@@ -56,11 +82,12 @@ class EditRecipe extends Component {
                         <legend>Instructions</legend>
                         <table>
                             <tbody>
-                                {}
+                                {formInstructions}
                             </tbody>
                         </table>
                         <button type='button' onClick={this.handleAddStep}>Add Step</button>
                     </fieldset>
+                    <button type='submit'>Save Recipe</button>
                 </form>
             </div>
         )

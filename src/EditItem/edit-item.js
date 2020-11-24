@@ -4,7 +4,7 @@ import Header from '../Header/header';
 
 class EditItem extends Component {
     handleClickBack = () => {
-        this.props.history.push(`/inventory/${this.props.match.params.id}`)
+        this.props.history.push('/inventory')
     }
     handleChangeQuantity = () => {
 
@@ -23,7 +23,7 @@ class EditItem extends Component {
                     <input id='qty' name='qty' value={item.qty} onChange={this.handleChangeQuantity}/>
                     <label htmlFor='qty'>{item.unit}</label>
                     <div>
-                        <button onClick={this.handleClickBack}>Back</button>
+                        <button type='button' onClick={this.handleClickBack}>Back</button>
                         <button type='submit'>Save</button>
                     </div>
                 </form>

@@ -4,6 +4,9 @@ import Header from '../Header/header';
 import Items from '../items';
 
 class Inventory extends Component {
+    handleAddItem = () => {
+        this.props.history.push('/inventory-add')
+    }
     render (){
         const inventory = Items.map((item, index) => {
             return <InventoryItem item={item} key={index} />
@@ -25,7 +28,7 @@ class Inventory extends Component {
                         {inventory}      
                         </tbody>
                     </table>
-                    <button>Add Item</button>
+                    <button type='button' onClick={this.handleAddItem}>Add Item</button>
                 </section>
             </div>
         )

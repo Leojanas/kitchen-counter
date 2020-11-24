@@ -25,6 +25,7 @@ class RecipeList extends Component {
                             {recipes}
                         </tbody>
                     </table>
+                    <button type='button'>Add Recipe</button>
                 </section>
                 
             </div>
