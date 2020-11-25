@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from '../Header/header';
 
 class AddItem extends Component {
     handleClickBack = () => {
@@ -7,8 +6,6 @@ class AddItem extends Component {
     }
     render() {
         return (
-            <>
-                <Header />
                 <section>
                     <h2>Add Item</h2>
                     <form>
@@ -33,7 +30,6 @@ class AddItem extends Component {
 
                     </form>
                 </section>
-            </>
         )
     }
 }

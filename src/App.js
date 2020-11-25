@@ -10,10 +10,12 @@ import ItemDetail from './ItemDetail/item-detail';
 import EditItem from './EditItem/edit-item';
 import EditRecipe from './EditRecipe/edit-recipe';
 import AddItem from './AddItem/add-item';
+import Header from './Header/header';
 
 function App() {
   return (
     <main className='App'>
+      <Header />
       <Route
         exact path='/'
         component={Home}

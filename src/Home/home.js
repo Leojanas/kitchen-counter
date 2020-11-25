@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import Header from '../Header/header';
 
 class Home extends Component {
     render () {
         return(
             <div>
-                <Header />
                 <section>
                     <h2>Record Your Inventory</h2>
                     <p>With Kitchen Counter, you can easily input all the food items you currently have
