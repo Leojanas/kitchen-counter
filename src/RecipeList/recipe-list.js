@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
-import Header from '../Header/header';
 import Recipe from '../Recipe/recipe';
-import Recipes from '../recipes';
 
 class RecipeList extends Component {
+    handleAddRecipe = () => {
+        this.props.history.push('/recipes-add')
+    }
     render () {
-        const recipes = Recipes.map((recipe, index) => {
-            return <Recipe key={index} recipe={recipe} />
+        const recipes = this.props.recipes.map((recipe, index) => {
+            return <Recipe 
+                key={index} 
+                recipe={recipe} 
+                handleDeleteRecipe={this.props.handleDeleteRecipe}
+                handleAddMealPlan={this.props.handleAddMealPlan}
+                />
         })
         return (
-            <div>
-                <Header />
                 <section>
                     <h2>My Recipes</h2>
                     <table>
@@ -25,10 +29,8 @@ class RecipeList extends Component {
                             {recipes}
                         </tbody>
                     </table>
-                    <button type='button'>Add Recipe</button>
+                    <button type='button' onClick={this.handleAddRecipe}>Add Recipe</button>
                 </section>
-                
-            </div>
         )
     }
 }

@@ -13,6 +13,7 @@ class Navigation extends Component {
                 <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/inventory'>Inventory</Link>
                 <Link className='link' to='/recipes'>Recipes</Link>
+                <Link className='link' to='/mealplan'>Meal Plan</Link>
             </div>
         )
     }

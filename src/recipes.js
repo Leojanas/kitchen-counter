@@ -2,7 +2,7 @@ const Recipes = [
     {
         id: 1, 
         name: 'Sweet Potato Casserole', 
-        category: 'Dinner Side', 
+        category: 'Side', 
         rating: 5,
         ingredients: [
             {name: 'sweet potatoes',
@@ -23,7 +23,7 @@ const Recipes = [
     {
         id: 2, 
         name: 'Tacos', 
-        category: 'Dinner Main', 
+        category: 'Main', 
         rating: 4,
         ingredients: [
             {name: 'ground beef',

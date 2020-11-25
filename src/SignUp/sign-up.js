@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import Header from '../Header/header';
 
 class SignUp extends Component {
     render () {
         return (
-            <div>
-                <Header />
                 <form>
                     <h3>Sign Up</h3>
                     <label htmlFor='first-name'>First Name: </label>
@@ -23,7 +20,6 @@ class SignUp extends Component {
                     <input id='repeat-password' />
                     <button type='submit'>Sign Up</button>
                 </form>
-            </div>
         )
     }
 }

@@ -1,23 +1,17 @@
 import React, {Component} from 'react';
-import Header from '../Header/header';
-import InventoryItem from '../InventoryItem/inventory-item';
-import Recipes from '../recipes';
 import {Link} from 'react-router-dom';
+import Helpers from '../helpers';
 
 class RecipeDetail extends Component {
+    handleClickBack = () => {
+        this.props.history.push('/recipes')
+    }
     render() {
-        const recipe = Recipes.filter(r => {
-            return r.id === Number(this.props.match.params.id)
-        })[0]
-        const ingredients = recipe.ingredients.map((item, index) => {
-            return <InventoryItem key={index} item={item} recipe={true} />
-        })
-        const instructions = recipe.instructions.map((item, index) => {
-            return <li key={index}>{item.content}</li>
-        })
+        const recipe = Helpers.getItemById(this.props.recipes, this.props.match.params.id)
+        const ingredients = Helpers.getIngredientsFromRecipe(recipe)
+        const instructions = Helpers.getInstructionsFromRecipe(recipe)
         return (
             <div>
-                <Header />
                 <h2>{recipe.name}</h2>
                 <p>{recipe.category}</p>
                 <p>Rating: {recipe.rating}/5</p>
@@ -43,6 +37,7 @@ class RecipeDetail extends Component {
                     </ol>
                 </section>
                 <div>
+                    <button type='button' onClick={this.handleClickBack}>Back</button>
                     <button><Link to={`/recipes/${this.props.match.params.id}/edit`}>Edit Recipe</Link></button>
                     <button>Use Recipe</button>
                 </div>

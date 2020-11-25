@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Items from '../items';
-import Header from '../Header/header';
+import Helpers from '../helpers';
 
 class ItemDetail extends Component {
     handleClickBack = () => {
@@ -10,12 +9,9 @@ class ItemDetail extends Component {
         this.props.history.push(`/inventory/${this.props.match.params.id}/edit`)
     }
     render() {
-        const item = Items.filter(item => {
-            return item.id === Number(this.props.match.params.id)
-        })[0]
+        const item = Helpers.getItemById(this.props.items, this.props.match.params.id)
         return (
             <div>
-                <Header />
                 <h3>{item.name}</h3>
                 <p>Qty: {item.qty} {item.unit}</p>
                 <p>Expires on: {item.expiration}</p>
