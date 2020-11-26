@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import FormIngredient from '../FormIngredient/form-ingredient';
 import Helpers from '../helpers';
+import PropTypes from 'prop-types';
 
 class EditRecipe extends Component {  
     constructor(props) {
         super(props)
         let recipe = Helpers.getItemById(props.recipes, props.match.params.id)
         this.state = {
-            recipe: recipe
+            recipe: recipe || {ingredients: [], instructions: [], name: ''}
         }
+    }
+    static defaultProps = {
+        match:{params: {id: 0}},
+        history: {},
+        recipes: []
     }
     handleChange = (event) => {
         let field = event.target.id;
@@ -31,7 +37,7 @@ class EditRecipe extends Component {
     handleRemoveIngredient = (event) => {
         let index = event.target.id.split('-')[1] -1;
         let ingredients = this.state.recipe.ingredients.filter((i, ind) => {
-            return ind ==! index
+            return ind !== index
         })
         let recipe = {...this.state.recipe, ingredients}
         this.setState({recipe})
@@ -142,3 +148,9 @@ class EditRecipe extends Component {
 }
 
 export default EditRecipe;
+
+EditRecipe.propTypes = {
+    match: PropTypes.shape({params: PropTypes.shape({id: PropTypes.number.isRequired})}),
+    history: PropTypes.object.isRequired,
+    recipes: PropTypes.array
+}

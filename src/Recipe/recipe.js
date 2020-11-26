@@ -6,14 +6,14 @@ class Recipe extends Component {
         let buttons;
         if(this.props.use == 'mealPlan'){
             buttons = (
-                <td><button type='button' onClick={() => this.props.handleRemoveRecipe(this.props.recipe.id)}>Remove</button></td>
+                <td><button type='button' onClick={() => this.props.handleRemoveRecipe(this.props.remove)}>Remove</button></td>
             )
         }else{
             buttons = (
                 <>
                 <td><button><Link to={`/recipes/${this.props.recipe.id}/edit`}>Edit</Link></button></td>                
                 <td><button type='button' onClick={() => this.props.handleDeleteRecipe(this.props.recipe.id)}>Delete</button></td>
-                <td><button type='button' onClick={() => this.props.handleAddMealPlan(this.props.recipe.id)}>Add to Meal Plan</button></td>
+                <td><button type='button' onClick={() => this.props.handleAddRecipeMealPlan(this.props.recipe.id)}>Add to Meal Plan</button></td>
                 </>)
         }
         return (

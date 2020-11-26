@@ -39,7 +39,7 @@ class RecipeDetail extends Component {
                 <div>
                     <button type='button' onClick={this.handleClickBack}>Back</button>
                     <button><Link to={`/recipes/${this.props.match.params.id}/edit`}>Edit Recipe</Link></button>
-                    <button>Use Recipe</button>
+                    <button type='button' onClick={() => this.props.handleUseRecipe(recipe.id)}>Use Recipe</button>
                 </div>
             </div>
         )

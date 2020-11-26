@@ -15,6 +15,18 @@ const Helpers = {
         return recipe.instructions.map((item, index) => {
             return <li key={index}>{item.content}</li>
         })
+    },
+    getQtyFromName(items, name){
+        let item = items.filter(i => {
+            return i.name === name
+        })[0]
+        return item.qty
+    },
+    getItemByName(items, name){
+        let item = items.filter(i => {
+            return i.name === name
+        })[0]
+        return item
     }
 
 }

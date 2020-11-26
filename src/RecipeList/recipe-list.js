@@ -11,7 +11,7 @@ class RecipeList extends Component {
                 key={index} 
                 recipe={recipe} 
                 handleDeleteRecipe={this.props.handleDeleteRecipe}
-                handleAddMealPlan={this.props.handleAddMealPlan}
+                handleAddRecipeMealPlan={this.props.handleAddRecipeMealPlan}
                 />
         })
         return (

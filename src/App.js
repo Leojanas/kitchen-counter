@@ -15,6 +15,7 @@ import AddRecipe from './AddRecipe/add-recipe';
 import Recipes from './recipes';
 import Items from './items';
 import Mealplan from './Mealplan/Mealplan';
+import Helpers from './helpers';
 
 
 class App extends Component {
@@ -78,18 +79,73 @@ class App extends Component {
     })
     this.setState({items})
   }
-  handleAddMealPlan = (id) => {
+  handleUseRecipe = (id) => {
+    let recipe = Helpers.getItemById(this.state.recipes, id)
+    let ingredients = recipe.ingredients
+    let inventoryNames = this.state.items.map(item => {
+      return item.name
+    });
+    let error = false;
+    ingredients.forEach(ingredient => {
+      if(!inventoryNames.includes(ingredient.name)){
+        console.log(ingredient.name + 'is not in inventory')
+        error = true;
+      }else{
+        let inventoryQuantity = Helpers.getQtyFromName(this.state.items, ingredient.name);
+        if(ingredient.qty > inventoryQuantity){
+          console.log('Not enough '+ ingredient.name + ' in inventory.')
+          error = true;
+        }
+      }
+    });
+    if(error){
+      //need proper error response
+    }else{
+      ingredients.forEach(ingredient => {
+        let items = this.state.items
+        let item = Helpers.getItemByName(items, ingredient.name)
+        item.qty = item.qty - ingredient.qty;
+        items = items.map(i => {
+          if(i.id === item.id){
+            return item
+          }else{
+            return i
+          }
+        })
+        this.setState({items})
+      })
+    }
+  }
+  handleAddRecipeMealPlan = (id) => {
     let recipe = this.state.recipes.filter(r => r.id === id);
     let mealPlan = this.state.mealPlan;
     mealPlan.recipes.push(recipe[0])
     this.setState({mealPlan})
   }
-  handleRemoveRecipe = (id) => {
+  handleAddItemMealPlan = (id) => {
+    let item = this.state.items.filter(i => i.id === id);
     let mealPlan = this.state.mealPlan;
-    let recipes = mealPlan.recipes.filter(recipe => {
-      return recipe.id !== id
+    mealPlan.items.push(item[0])
+    this.setState({mealPlan})
+  }
+  handleRemoveRecipe = (i) => {
+    let mealPlan = this.state.mealPlan;
+    let recipes = mealPlan.recipes.filter((recipe,index) => {
+      return index !== i
     })
     mealPlan = {...this.state.mealPlan, recipes}
+    this.setState({mealPlan})
+  }
+  handleRemoveItem = (i) => {
+    let mealPlan = this.state.mealPlan;
+    let items = mealPlan.items.filter((item, index) => {
+      return index !== i
+    })
+    mealPlan = {...this.state.mealPlan, items}
+    this.setState({mealPlan})
+  }
+  handleEmptyMealPlan = () => {
+    let mealPlan = {recipes: [], items: []}
     this.setState({mealPlan})
   }
   render(){
@@ -107,6 +163,7 @@ class App extends Component {
           history={history}
           items={this.state.items} 
           handleDeleteItem={this.handleDeleteItem}
+          handleAddItemMealPlan={this.handleAddItemMealPlan}
         />
         }
       />
@@ -141,7 +198,7 @@ class App extends Component {
             recipes={this.state.recipes}
             history={history} 
             handleDeleteRecipe={this.handleDeleteRecipe}
-            handleAddMealPlan={this.handleAddMealPlan}
+            handleAddRecipeMealPlan={this.handleAddRecipeMealPlan}
             
           />
         }
@@ -158,7 +215,12 @@ class App extends Component {
       <Route
         exact path='/recipes/:id'
         render={({match, history}) => 
-          <RecipeDetail recipes={this.state.recipes} match={match} history={history} />
+          <RecipeDetail  
+            match={match} 
+            history={history}
+            recipes={this.state.recipes}
+            handleUseRecipe={this.handleUseRecipe} 
+          />
         }
       />
       <Route 
@@ -179,6 +241,8 @@ class App extends Component {
             history={history}
             mealPlan={this.state.mealPlan}
             handleRemoveRecipe={this.handleRemoveRecipe}
+            handleRemoveItem={this.handleRemoveItem}
+            handleEmptyMealPlan={this.handleEmptyMealPlan}
           />
         }
       />

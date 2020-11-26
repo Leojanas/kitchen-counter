@@ -7,7 +7,13 @@ class Inventory extends Component {
     }
     render (){
         const inventory = this.props.items.map((item, index) => {
-            return <InventoryItem item={item} key={index} handleDeleteItem={this.props.handleDeleteItem}/>
+            return <InventoryItem 
+                item={item} 
+                key={index}
+                use='inventory' 
+                handleDeleteItem={this.props.handleDeleteItem}
+                handleAddItemMealPlan={this.props.handleAddItemMealPlan}
+            />
         })
         return (
                 <section>
