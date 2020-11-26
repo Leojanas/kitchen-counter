@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 class Recipe extends Component {
     render () {
         let buttons;
-        if(this.props.use == 'mealPlan'){
+        if(this.props.use === 'mealPlan'){
             buttons = (
                 <td><button type='button' onClick={() => this.props.handleRemoveRecipe(this.props.remove)}>Remove</button></td>
             )

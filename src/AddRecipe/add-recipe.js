@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import FormIngredient from '../FormIngredient/form-ingredient';
-import Helpers from '../helpers';
 
 class AddRecipe extends Component {  
     constructor(props) {
