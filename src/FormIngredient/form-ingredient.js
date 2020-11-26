@@ -6,9 +6,8 @@ class FormIngredient extends Component {
         if(this.props.use === 'mealPlan'){
             buttons = (
                 <>
-                    <td><button type='button' id={`save-${this.props.number}`} onClick={this.props.handleSaveItem}>Save</button></td>
-                    <td><button type='button' id={`remove-${this.props.number}`} onClick={this.props.handleRemoveIngredient}>Remove</button></td>
-
+                    <td><button type='button' id={`save-${this.props.item.id}`} onClick={this.props.handleSaveItem}>Save</button></td>
+                    <td><button type='button' id={`remove-${this.props.item.id}`} onClick={this.props.handleRemoveIngredient}>Remove</button></td>
                 </>
             )
         }else {

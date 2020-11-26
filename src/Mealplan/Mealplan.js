@@ -7,12 +7,15 @@ class Mealplan extends Component {
     constructor(props){
         super(props)
         this.state = {
-            ingredients: []
+            ingredients: [],
+            count: 0
         }
     }
     handleAddItemMealPlan = () => {
-        console.log('handle add item called')
-        const id = this.props.mealPlan.items.length + this.state.ingredients.length + 1;
+        const id = this.state.count;
+        let count = this.state.count + 1;
+        this.setState({count})
+
         let item = {
             id: id,
             name: '',
@@ -34,11 +37,9 @@ class Mealplan extends Component {
     handleSaveItem = (e) => {
         e.preventDefault();
         let id = Number(e.target.id.split('-')[1]);
-        console.log(id)
         let item = this.state.ingredients.filter(item => {
             return item.id === id
         })[0]
-        console.log(item)
         let ingredients = this.state.ingredients.filter(item => {
             return item.id !== id
         })
@@ -48,9 +49,11 @@ class Mealplan extends Component {
     }
     handleUpdateIngredient = (event) => {
         let value = event.target.value;
-        let id = event.target.id.split('-');
-        let index= id[1] -1;
-        let attribute = id[2];
+        let id = Number(event.target.id.split('-')[1]);
+        let index= this.state.ingredients.findIndex(item => {
+            return item.id === id
+        })
+        let attribute = event.target.id.split('-')[2];
         let ingredient = this.state.ingredients[index];
         ingredient[attribute] = value;
         let ingredients = this.state.ingredients;
