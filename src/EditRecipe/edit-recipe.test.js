@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import EditItem from '../EditItem/edit-item';
 import EditRecipe from './edit-recipe';
 
 // this is the test case
