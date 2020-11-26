@@ -10,7 +10,6 @@ class InventoryItem extends Component {
             <>
                 <td><button><Link to={`/inventory/${this.props.item.id}/edit`} >Edit</Link></button></td>
                 <td><button type='button' onClick={() => this.props.handleDeleteItem(this.props.item.id)}>Delete</button></td>
-                <td><button type='button' onClick={() => this.props.handleAddItemMealPlan(this.props.item.id)}>Add to Meal Plan</button></td>
             </>
             )
         }else if(this.props.use === 'mealPlan'){

@@ -68,7 +68,7 @@ class EditRecipe extends Component {
         let content = event.target.value;
         let number = event.target.id.split('-')[1];
         let instructions = this.state.recipe.instructions.map(inst => {
-            if(inst.number == number){
+            if(inst.number === number){
                 return {...inst, content: content}
             }else{
                 return inst

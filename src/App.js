@@ -122,10 +122,10 @@ class App extends Component {
     mealPlan.recipes.push(recipe[0])
     this.setState({mealPlan})
   }
-  handleAddItemMealPlan = (id) => {
-    let item = this.state.items.filter(i => i.id === id);
+  handleAddItemMealPlan = (item) => {
     let mealPlan = this.state.mealPlan;
-    mealPlan.items.push(item[0])
+    mealPlan.items.push(item)
+    console.log(mealPlan)
     this.setState({mealPlan})
   }
   handleRemoveRecipe = (i) => {
@@ -148,6 +148,9 @@ class App extends Component {
     let mealPlan = {recipes: [], items: []}
     this.setState({mealPlan})
   }
+  generateShoppingList = () => {
+
+  }
   render(){
   return (
     <main className='App'>
@@ -163,7 +166,6 @@ class App extends Component {
           history={history}
           items={this.state.items} 
           handleDeleteItem={this.handleDeleteItem}
-          handleAddItemMealPlan={this.handleAddItemMealPlan}
         />
         }
       />
@@ -240,9 +242,11 @@ class App extends Component {
           <Mealplan 
             history={history}
             mealPlan={this.state.mealPlan}
+            generateShoppingList={this.generateShoppingList}
             handleRemoveRecipe={this.handleRemoveRecipe}
             handleRemoveItem={this.handleRemoveItem}
             handleEmptyMealPlan={this.handleEmptyMealPlan}
+            handleAddItemMealPlan={this.handleAddItemMealPlan}
           />
         }
       />

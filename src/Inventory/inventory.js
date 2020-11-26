@@ -12,7 +12,6 @@ class Inventory extends Component {
                 key={index}
                 use='inventory' 
                 handleDeleteItem={this.props.handleDeleteItem}
-                handleAddItemMealPlan={this.props.handleAddItemMealPlan}
             />
         })
         return (

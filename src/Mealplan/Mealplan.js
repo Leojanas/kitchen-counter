@@ -1,8 +1,62 @@
 import React, {Component} from 'react';
 import Recipe from '../Recipe/recipe';
+import FormIngredient from '../FormIngredient/form-ingredient';
 import InventoryItem from '../InventoryItem/inventory-item';
 
 class Mealplan extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            ingredients: []
+        }
+    }
+    handleAddItemMealPlan = () => {
+        console.log('handle add item called')
+        const id = this.props.mealPlan.items.length + this.state.ingredients.length + 1;
+        let item = {
+            id: id,
+            name: '',
+            qty: 0,
+            unit: ''
+        };
+        let ingredients = this.state.ingredients;
+        ingredients.push(item);
+        this.setState({ingredients})
+    }
+    handleRemoveIngredient = (e) => {
+        e.preventDefault();
+        let id = Number(e.target.id.split('-')[1]);
+        let ingredients = this.state.ingredients.filter(item => {
+            return item.id !== id
+        })
+        this.setState({ingredients})
+    }
+    handleSaveItem = (e) => {
+        e.preventDefault();
+        let id = Number(e.target.id.split('-')[1]);
+        console.log(id)
+        let item = this.state.ingredients.filter(item => {
+            return item.id === id
+        })[0]
+        console.log(item)
+        let ingredients = this.state.ingredients.filter(item => {
+            return item.id !== id
+        })
+        this.setState({ingredients})
+        this.props.handleAddItemMealPlan(item)
+
+    }
+    handleUpdateIngredient = (event) => {
+        let value = event.target.value;
+        let id = event.target.id.split('-');
+        let index= id[1] -1;
+        let attribute = id[2];
+        let ingredient = this.state.ingredients[index];
+        ingredient[attribute] = value;
+        let ingredients = this.state.ingredients;
+        ingredients[index] = ingredient;
+        this.setState({ingredients})
+    }
     render () {
         const recipes = this.props.mealPlan.recipes.map((recipe, index) => {
             return <Recipe 
@@ -20,6 +74,17 @@ class Mealplan extends Component {
                 remove={index}
                 use='mealPlan'
                 handleRemoveItem={this.props.handleRemoveItem}
+            />
+        })
+        const formItems = this.state.ingredients.map(item => {
+            return <FormIngredient
+                key={item.id}
+                item={item}
+                number={item.id}
+                use='mealPlan'
+                handleRemoveIngredient={this.handleRemoveIngredient}
+                handleSaveItem={this.handleSaveItem}
+                handleUpdateIngredient={this.handleUpdateIngredient}
             />
         })
         return (
@@ -49,10 +114,12 @@ class Mealplan extends Component {
                     </thead>
                     <tbody>
                         {items}
+                        {formItems}
                     </tbody>
                 </table>
+                <button type='button' onClick={this.handleAddItemMealPlan}>Add Item</button>
                 <div>
-                    <button type='button'>Generate Shopping List</button>
+                    <button type='button' onClick={this.props.generateShoppingList}>Generate Shopping List</button>
                     <button type='button' onClick={this.props.handleEmptyMealPlan}>Empty Meal Plan</button>
                 </div>
             </section>
