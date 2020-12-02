@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Helpers from '../helpers';
+import config from '../config';
 
 class EditItem extends Component {
     handleClickBack = () => {
@@ -10,8 +11,22 @@ class EditItem extends Component {
         let item = Helpers.getItemById(this.props.items, this.props.match.params.id)
         item.qty = e.target.qty.value 
         item.expiration = e.target.expiration.value
-        this.props.handleEditItem(item)
-        this.props.history.push('/inventory')
+        fetch(config.API_ENDPOINT + `/api/inventory/${item.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+        .then(res => {
+            if(!res.ok){
+                console.log(res)
+            }
+        })
+        .then(() => {
+            this.props.handleUpdateInventory()
+            this.props.history.push('/inventory')
+        })
     }
     render() {
         const item = Helpers.getItemById(this.props.items, this.props.match.params.id)
@@ -19,9 +34,9 @@ class EditItem extends Component {
             <div>
                 <h2>Edit Item</h2>
                 <form onSubmit={this.handleEditItem}>
-                    <h3>{item.name}</h3>
+                    <h3>{item.item_name}</h3>
                     <label htmlFor='qty'>Quantity: </label>
-                    <input id='qty' name='qty' defaultValue={item.qty} onChange={this.handleChangeQuantity}/>
+                    <input id='qty' name='qty' defaultValue={item.qty}/>
                     <label htmlFor='qty'>{item.unit}</label>
                     <br />
                     <label htmlFor='expiration'>Expires on: </label>
@@ -29,8 +44,7 @@ class EditItem extends Component {
                         id='expiration' 
                         name='expiration' 
                         type='date' 
-                        defaultValue={item.expiration} 
-                        onChange={this.handleChangeExpiration} 
+                        defaultValue={item.expiration.split('T')[0]}  
                     />
 
                     <div>

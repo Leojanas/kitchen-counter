@@ -12,9 +12,9 @@ class ItemDetail extends Component {
         const item = Helpers.getItemById(this.props.items, this.props.match.params.id)
         return (
             <div>
-                <h3>{item.name}</h3>
+                <h3>{item.item_name}</h3>
                 <p>Qty: {item.qty} {item.unit}</p>
-                <p>Expires on: {item.expiration}</p>
+                <p>Expires on: {item.expiration.split('T')[0]}</p>
                 <div>
                     <button id='back' onClick={this.handleClickBack}>Back</button>
                     <button id='edit' onClick={this.handleClickEdit}>Edit</button>

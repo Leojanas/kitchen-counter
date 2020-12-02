@@ -16,18 +16,31 @@ import Recipes from './recipes';
 import Items from './items';
 import Mealplan from './Mealplan/Mealplan';
 import Helpers from './helpers';
+import config from './config';
 
 
 class App extends Component {
   constructor(props) {
     super(props)
-    const items = Items;
-    const recipes = Recipes;
+    const items = [];
+    const recipes = [];
     this.state = {
       items,
       recipes,
       mealPlan: {recipes: [], items: []}
     }
+  }
+  componentDidMount() {
+    fetch(config.API_ENDPOINT + '/api/inventory', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(response => {
+      this.getInventory(response)
+    })
+  }
+  getInventory = (items) => {
+    this.setState({items})
   }
   handleDeleteRecipe = (id) => {
     let recipes = this.state.recipes;
@@ -54,30 +67,20 @@ class App extends Component {
     recipes.push(recipe)
     this.setState({recipes})
   }
-  handleDeleteItem = (id) => {
-    let items = this.state.items;
-    items = items.filter(i => {
-      return i.id !== id
+  handleUpdateInventory = () => {
+    fetch(config.API_ENDPOINT + '/api/inventory', {
+      method: 'GET'
     })
-    this.setState({items})
-  }
-  handleAddItem = (item) => {
-    let items = this.state.items;
-    let id= (items.length + 1);
-    item = {...item, id: id};
-    items.push(item);
-    this.setState({items})
-  }
-  handleEditItem = (item) => {
-    let items = this.state.items;
-    items = items.filter(i => {
-      if(i.id === item.id){
-        return item
-      }else{
-        return i
+    .then(res => {
+      if(!res.ok){
+        console.log(res)
       }
+      return res.json()
     })
-    this.setState({items})
+    .then(items => {
+      this.setState({items})
+    })
+    .catch(e => console.log(e))
   }
   handleUseRecipe = (id) => {
     let recipe = Helpers.getItemById(this.state.recipes, id)
@@ -165,7 +168,7 @@ class App extends Component {
         <Inventory 
           history={history}
           items={this.state.items} 
-          handleDeleteItem={this.handleDeleteItem}
+          handleUpdateInventory={this.handleUpdateInventory}
         />
         }
       />
@@ -174,7 +177,7 @@ class App extends Component {
         render={({history}) =>
           <AddItem
             history={history}
-            handleAddItem={this.handleAddItem}
+            handleUpdateInventory={this.handleUpdateInventory}
           />
         }
       />
@@ -189,7 +192,7 @@ class App extends Component {
             items={this.state.items}
             history={history}
             match={match}
-            handleEditItem={this.handleEditItem}
+            handleUpdateInventory={this.handleUpdateInventory}
           />
         }
       />

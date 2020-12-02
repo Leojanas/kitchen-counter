@@ -2,18 +2,25 @@ import React, {Component} from 'react';
 import InventoryItem from '../InventoryItem/inventory-item';
 
 class Inventory extends Component {
+    static defaultProps = {
+        items: []
+    }
     handleAddItem = () => {
         this.props.history.push('/inventory-add')
     }
     render (){
-        const inventory = this.props.items.map((item, index) => {
-            return <InventoryItem 
-                item={item} 
-                key={index}
-                use='inventory' 
-                handleDeleteItem={this.props.handleDeleteItem}
-            />
-        })
+        let inventory;
+        if(this.props.items.length !== 0){
+            inventory = this.props.items.map((item, index) => {
+                return <InventoryItem 
+                    item={item} 
+                    key={index}
+                    use='inventory' 
+                    handleUpdateInventory={this.props.handleUpdateInventory}
+                />
+            })
+        }
+
         return (
                 <section>
                     <h2>My Inventory</h2>

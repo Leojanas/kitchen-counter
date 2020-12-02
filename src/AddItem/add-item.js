@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import config from '../config';
 
 class AddItem extends Component {
     handleClickBack = () => {
@@ -8,13 +9,31 @@ class AddItem extends Component {
         e.preventDefault();
         //add validation
         const item = {
-            name: e.target.name.value,
+            item_name: e.target.name.value,
             qty: e.target.qty.value,
             unit: e.target.unit.value,
             expiration: e.target.expiration.value
         }
-        this.props.handleAddItem(item)
-        this.props.history.push('/inventory')
+        fetch(config.API_ENDPOINT + '/api/inventory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+        .then(res => {
+            if(!res.ok){
+                console.log(res)
+            }
+            res.json()
+        })
+        .then(() => {
+            this.props.handleUpdateInventory()
+        })
+        .then(() => {
+            this.props.history.push('/inventory')
+        })
+        .catch(e => console.log(e))
     }
     render() {
         return (
