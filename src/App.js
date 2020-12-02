@@ -12,8 +12,6 @@ import EditRecipe from './EditRecipe/edit-recipe';
 import AddItem from './AddItem/add-item';
 import Header from './Header/header';
 import AddRecipe from './AddRecipe/add-recipe';
-import Recipes from './recipes';
-import Items from './items';
 import Mealplan from './Mealplan/Mealplan';
 import Helpers from './helpers';
 import config from './config';
@@ -38,9 +36,19 @@ class App extends Component {
     .then(response => {
       this.getInventory(response)
     })
+    fetch(config.API_ENDPOINT + '/api/recipes', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(response => {
+      this.getRecipes(response)
+    })
   }
   getInventory = (items) => {
     this.setState({items})
+  }
+  getRecipes = (recipes) => {
+    this.setState({recipes})
   }
   handleDeleteRecipe = (id) => {
     let recipes = this.state.recipes;
@@ -60,13 +68,6 @@ class App extends Component {
     })
     this.setState({recipes})
   }
-  handleAddRecipe = (recipe) => {
-    let recipes = this.state.recipes;
-    let id = recipes.length + 1;
-    recipe = {...recipe, id: id}
-    recipes.push(recipe)
-    this.setState({recipes})
-  }
   handleUpdateInventory = () => {
     fetch(config.API_ENDPOINT + '/api/inventory', {
       method: 'GET'
@@ -79,6 +80,21 @@ class App extends Component {
     })
     .then(items => {
       this.setState({items})
+    })
+    .catch(e => console.log(e))
+  }
+  handleUpdateRecipes = () => {
+    fetch(config.API_ENDPOINT + '/api/recipes', {
+      method: 'GET'
+    })
+    .then(res => {
+      if(!res.ok){
+        console.log(res)
+      }
+      return res.json()
+    })
+    .then(recipes => {
+      this.setState({recipes})
     })
     .catch(e => console.log(e))
   }
@@ -213,7 +229,7 @@ class App extends Component {
         render={({history}) => 
           <AddRecipe
             history={history}
-            handleAddRecipe={this.handleAddRecipe}
+            handleUpdateRecipes={this.handleUpdateRecipes}
           />
         }
       />
