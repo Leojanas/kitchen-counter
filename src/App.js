@@ -48,24 +48,7 @@ class App extends Component {
     this.setState({items})
   }
   getRecipes = (recipes) => {
-    this.setState({recipes})
-  }
-  handleDeleteRecipe = (id) => {
-    let recipes = this.state.recipes;
-    recipes = recipes.filter(r => {
-      return r.id !== id
-    })
-    this.setState({recipes})
-  }
-  handleEditRecipe = (recipe) => {
-    let recipes = this.state.recipes;
-    recipes = recipes.map(r => {
-      if(r.id === recipe.id){
-        return recipe
-      }else{
-        return r
-      }
-    })
+    recipes = Helpers.makeInstructionsArray(recipes)
     this.setState({recipes})
   }
   handleUpdateInventory = () => {
@@ -79,7 +62,7 @@ class App extends Component {
       return res.json()
     })
     .then(items => {
-      this.setState({items})
+      this.getInventory(items)
     })
     .catch(e => console.log(e))
   }
@@ -87,14 +70,9 @@ class App extends Component {
     fetch(config.API_ENDPOINT + '/api/recipes', {
       method: 'GET'
     })
-    .then(res => {
-      if(!res.ok){
-        console.log(res)
-      }
-      return res.json()
-    })
+    .then(res => res.json())
     .then(recipes => {
-      this.setState({recipes})
+      return this.getRecipes(recipes)
     })
     .catch(e => console.log(e))
   }
@@ -199,7 +177,12 @@ class App extends Component {
       />
       <Route
         exact path='/inventory/:id'
-        render={({match, history}) => <ItemDetail items={this.state.items} match={match} history={history}/>}
+        render={({match, history}) => <ItemDetail 
+        items={this.state.items} 
+        match={match} 
+        history={history}
+        handleUpdateInventory={this.handleUpdateInventory}
+        />}
       />
       <Route
         path='/inventory/:id/edit'
@@ -218,7 +201,7 @@ class App extends Component {
           <RecipeList 
             recipes={this.state.recipes}
             history={history} 
-            handleDeleteRecipe={this.handleDeleteRecipe}
+            handleUpdateRecipes={this.handleUpdateRecipes}
             handleAddRecipeMealPlan={this.handleAddRecipeMealPlan}
             
           />
@@ -251,7 +234,7 @@ class App extends Component {
             match={match}
             history={history}
             recipes={this.state.recipes}
-            handleEditRecipe={this.handleEditRecipe}
+            handleUpdateRecipes={this.handleUpdateRecipes}
           />
         }
       />

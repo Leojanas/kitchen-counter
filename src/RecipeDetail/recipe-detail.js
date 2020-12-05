@@ -12,7 +12,7 @@ class RecipeDetail extends Component {
         const instructions = Helpers.getInstructionsFromRecipe(recipe)
         return (
             <div>
-                <h2>{recipe.name}</h2>
+                <h2>{recipe.recipe_name}</h2>
                 <p>{recipe.category}</p>
                 <p>Rating: {recipe.rating}/5</p>
                 <section>

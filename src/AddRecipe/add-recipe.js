@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import FormIngredient from '../FormIngredient/form-ingredient';
+import Helpers from '../helpers';
+import config from '../config';
 
 class AddRecipe extends Component {  
     constructor(props) {
         super(props)
         this.state = {
             recipe: {
-                name: '',
-                category: '',
+                recipe_name: '',
+                category: 'main',
                 rating: 0,
                 ingredients: [{
-                    name: '',
+                    item_name: '',
                     qty: '',
                     unit: ''
                 }],
@@ -30,7 +32,7 @@ class AddRecipe extends Component {
     }
     handleAddIngredient = () => {
         let emptyIngredient = {
-            name: '',
+            item_name: '',
             qty: 0,
             unit: ''
         }
@@ -71,10 +73,10 @@ class AddRecipe extends Component {
     }
     handleUpdateInstruction = (event) => {
         let content = event.target.value;
-        let number = event.target.id.split('-')[1];
+        let number = Number(event.target.id.split('-')[1]);
         let instructions = this.state.recipe.instructions.map(inst => {
             if(inst.number === number){
-                return {...inst, content: content}
+                return {number: number, content: content}
             }else{
                 return inst
             }
@@ -84,8 +86,22 @@ class AddRecipe extends Component {
     }
     handleAddRecipe = (e) => {
         e.preventDefault();
-        this.props.handleAddRecipe(this.state.recipe)
-        this.props.history.push('/recipes')
+        let recipe = Helpers.stringifyRecipeInstructions(this.state.recipe)
+        console.log(recipe)
+        fetch(config.API_ENDPOINT + '/api/recipes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recipe)
+        })
+        .then(res => {
+            if(!res.ok){
+                //error handling
+            }
+            this.props.handleUpdateRecipes()
+            this.props.history.push('/recipes')
+        })
     }
     render() {
         let formIngredients;
@@ -109,15 +125,15 @@ class AddRecipe extends Component {
         })
         return(
                 <form onSubmit={this.handleAddRecipe}>
-                    <label htmlFor='name'>Name: </label>
-                    <input name='name' id='name' value={this.state.recipe.name} onChange={this.handleChange}/>
+                    <label htmlFor='recipe_name'>Name: </label>
+                    <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
                     <label htmlFor='category'>Category: </label>
                     <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
-                        <option value='Main'>Main</option>
-                        <option value='Side'>Side</option>
-                        <option value='Dessert'>Dessert</option>
-                        <option value='Breakfast'>Breakfast</option>
-                        <option value='Lunch'>Lunch</option>
+                        <option value='main'>Main</option>
+                        <option value='side'>Side</option>
+                        <option value='dessert'>Dessert</option>
+                        <option value='breakfast'>Breakfast</option>
+                        <option value='lunch'>Lunch</option>
                     </select>
                     <label htmlFor='rating'>Rating: </label>
                     <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>

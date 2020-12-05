@@ -19,7 +19,7 @@ class FormIngredient extends Component {
         }
         return (
             <tr>
-                <td><input id={`ingredients-${this.props.number}-name`} value={this.props.item.name} onChange={this.props.handleUpdateIngredient}/></td>
+                <td><input id={`ingredients-${this.props.number}-item_name`} value={this.props.item.item_name} onChange={this.props.handleUpdateIngredient}/></td>
                 <td><input id={`ingredients-${this.props.number}-qty`} value={this.props.item.qty} onChange={this.props.handleUpdateIngredient}/></td>
                 <td><input id={`ingredients-${this.props.number}-unit`} value={this.props.item.unit} onChange={this.props.handleUpdateIngredient}/></td>
                  {buttons}           

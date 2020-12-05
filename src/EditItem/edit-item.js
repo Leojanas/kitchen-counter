@@ -30,6 +30,7 @@ class EditItem extends Component {
     }
     render() {
         const item = Helpers.getItemById(this.props.items, this.props.match.params.id)
+        if(item){
         return (
             <div>
                 <h2>Edit Item</h2>
@@ -53,7 +54,9 @@ class EditItem extends Component {
                     </div>
                 </form>
             </div>
-        )
+        )}else{
+            return <div>Loading...</div>
+        }
     }
 }
 

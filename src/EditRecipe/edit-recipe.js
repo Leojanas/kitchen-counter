@@ -2,19 +2,23 @@ import React, {Component} from 'react';
 import FormIngredient from '../FormIngredient/form-ingredient';
 import Helpers from '../helpers';
 import PropTypes from 'prop-types';
+import config from '../config';
 
 class EditRecipe extends Component {  
     constructor(props) {
         super(props)
-        let recipe = Helpers.getItemById(props.recipes, props.match.params.id)
+        let recipe = Helpers.getItemById(this.props.recipes, props.match.params.id)
         this.state = {
-            recipe: recipe || {ingredients: [], instructions: [], name: ''}
+            recipes: props.recipes,
+            recipe: recipe || {ingredients: [], instructions: [], name: ''},
         }
     }
-    static defaultProps = {
-        match:{params: {id: 0}},
-        history: {},
-        recipes: []
+    componentDidUpdate(props){
+        let recipe = Helpers.getItemById(this.props.recipes, props.match.params.id)
+        if(typeof(recipe) !== typeof(this.state.recipe))
+        this.setState({
+            recipe
+        })
     }
     handleChange = (event) => {
         let field = event.target.id;
@@ -66,7 +70,7 @@ class EditRecipe extends Component {
     }
     handleUpdateInstruction = (event) => {
         let content = event.target.value;
-        let number = event.target.id.split('-')[1];
+        let number = Number(event.target.id.split('-')[1]);
         let instructions = this.state.recipe.instructions.map(inst => {
             if(inst.number === number){
                 return {...inst, content: content}
@@ -79,13 +83,26 @@ class EditRecipe extends Component {
     }
     handleEditRecipe = (e) => {
         e.preventDefault();
-        this.props.handleEditRecipe(this.state.recipe)
-        this.props.history.push(`/recipes/${this.state.recipe.id}`)
+        let recipe = this.state.recipe;
+        recipe = Helpers.stringifyRecipeInstructions(recipe)
+        fetch(config.API_ENDPOINT + `/api/recipes/${this.props.match.params.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recipe)
+        })
+        .then(() => {
+            this.props.handleUpdateRecipes()
+            this.props.history.push(`/recipes/${this.state.recipe.id}`)
+        })
+
     }
     render() {
         let formIngredients;
         let formInstructions;
-        formIngredients = this.state.recipe.ingredients.map((i, index) => {
+        if(this.state.recipe){
+            formIngredients = this.state.recipe.ingredients.map((i, index) => {
             return <FormIngredient 
                 item={i} 
                 key={index} 
@@ -93,19 +110,19 @@ class EditRecipe extends Component {
                 handleUpdateIngredient={this.handleUpdateIngredient}
                 handleRemoveIngredient={this.handleRemoveIngredient}
                 />
-        })
-        formInstructions = this.state.recipe.instructions.map((i, index) => {
+            })   
+            formInstructions = this.state.recipe.instructions.map((i, index) => {
             return (
                 <tr key={index}>
                 <td>Step {i.number}</td>
                 <td><input id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/></td>
                 </tr>
             )
-        })
+            })
         return(
                 <form onSubmit={this.handleEditRecipe}>
-                    <label htmlFor='name'>Name: </label>
-                    <input name='name' id='name' value={this.state.recipe.name} onChange={this.handleChange}/>
+                    <label htmlFor='recipe_name'>Name: </label>
+                    <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
                     <label htmlFor='category'>Category: </label>
                     <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
                         <option value='Main'>Main</option>
@@ -144,13 +161,18 @@ class EditRecipe extends Component {
                     <button type='submit'>Save Recipe</button>
                 </form>
         )
+        }else{
+            return (
+                <div><p>Loading recipe...</p></div>
+            )
+        }
     }
 }
 
 export default EditRecipe;
 
 EditRecipe.propTypes = {
-    match: PropTypes.shape({params: PropTypes.shape({id: PropTypes.number.isRequired})}),
+    match: PropTypes.shape({params: PropTypes.shape({id: PropTypes.string.isRequired})}),
     history: PropTypes.object.isRequired,
     recipes: PropTypes.array
 }
