@@ -11,8 +11,9 @@ class EditItem extends Component {
         let item = Helpers.getItemById(this.props.items, this.props.match.params.id)
         item.qty = e.target.qty.value 
         item.expiration = e.target.expiration.value
+        item.unit = e.target.unit.value
         fetch(config.API_ENDPOINT + `/api/inventory/${item.id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -38,14 +39,23 @@ class EditItem extends Component {
                     <h3>{item.item_name}</h3>
                     <label htmlFor='qty'>Quantity: </label>
                     <input id='qty' name='qty' defaultValue={item.qty}/>
-                    <label htmlFor='qty'>{item.unit}</label>
+                    <select name='unit' id='unit' defaultValue={item.unit}>
+                            <option value='pounds'>pounds</option>
+                            <option value='ounces'>ounces</option>
+                            <option value='gallons'>gallons</option>
+                            <option value='pints'>pints</option>
+                            <option value='cups'>cups</option>
+                            <option value='tablespoons'>tablespoons</option>
+                            <option value='teaspoons'>teaspoons</option>
+                            <option value='each'>each</option>
+                        </select>
                     <br />
                     <label htmlFor='expiration'>Expires on: </label>
                     <input 
                         id='expiration' 
                         name='expiration' 
                         type='date' 
-                        defaultValue={item.expiration.split('T')[0]}  
+                        defaultValue={item.expiration?item.expiration.split('T')[0]:null}  
                     />
 
                     <div>

@@ -3,8 +3,6 @@ import {Route} from 'react-router-dom';
 import Home from './Home/home';
 import Inventory from './Inventory/inventory';
 import RecipeList from './RecipeList/recipe-list';
-import SignUp from './SignUp/sign-up';
-import LogIn from './LogIn/log-in';
 import RecipeDetail from './RecipeDetail/recipe-detail';
 import ItemDetail from './ItemDetail/item-detail';
 import EditItem from './EditItem/edit-item';
@@ -13,6 +11,7 @@ import AddItem from './AddItem/add-item';
 import Header from './Header/header';
 import AddRecipe from './AddRecipe/add-recipe';
 import Mealplan from './Mealplan/Mealplan';
+import ShoppingList from './ShoppingList/shopping-list';
 import Helpers from './helpers';
 import config from './config';
 
@@ -25,7 +24,8 @@ class App extends Component {
     this.state = {
       items,
       recipes,
-      mealPlan: {recipes: [], items: []}
+      mealplan: {recipes: [], items: []},
+      shoppingList: []
     }
   }
   componentDidMount() {
@@ -43,6 +43,20 @@ class App extends Component {
     .then(response => {
       this.getRecipes(response)
     })
+    fetch(config.API_ENDPOINT + '/api/mealplan', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(response => {
+      this.getMealplan(response)
+    })
+    fetch(config.API_ENDPOINT + '/api/shopping-list', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(response => {
+      this.getShoppingList(response)
+    })
   }
   getInventory = (items) => {
     this.setState({items})
@@ -50,6 +64,12 @@ class App extends Component {
   getRecipes = (recipes) => {
     recipes = Helpers.makeInstructionsArray(recipes)
     this.setState({recipes})
+  }
+  getMealplan = (mealplan) => {
+    this.setState({mealplan})
+  }
+  getShoppingList = (shoppingList) => {
+    this.setState({shoppingList})
   }
   handleUpdateInventory = () => {
     fetch(config.API_ENDPOINT + '/api/inventory', {
@@ -76,77 +96,23 @@ class App extends Component {
     })
     .catch(e => console.log(e))
   }
-  handleUseRecipe = (id) => {
-    let recipe = Helpers.getItemById(this.state.recipes, id)
-    let ingredients = recipe.ingredients
-    let inventoryNames = this.state.items.map(item => {
-      return item.name
-    });
-    let error = false;
-    ingredients.forEach(ingredient => {
-      if(!inventoryNames.includes(ingredient.name)){
-        console.log(ingredient.name + 'is not in inventory')
-        error = true;
-      }else{
-        let inventoryQuantity = Helpers.getQtyFromName(this.state.items, ingredient.name);
-        if(ingredient.qty > inventoryQuantity){
-          console.log('Not enough '+ ingredient.name + ' in inventory.')
-          error = true;
-        }
-      }
-    });
-    if(error){
-      //need proper error response
-    }else{
-      ingredients.forEach(ingredient => {
-        let items = this.state.items
-        let item = Helpers.getItemByName(items, ingredient.name)
-        item.qty = item.qty - ingredient.qty;
-        items = items.map(i => {
-          if(i.id === item.id){
-            return item
-          }else{
-            return i
-          }
-        })
-        this.setState({items})
-      })
-    }
-  }
-  handleAddRecipeMealPlan = (id) => {
-    let recipe = this.state.recipes.filter(r => r.id === id);
-    let mealPlan = this.state.mealPlan;
-    mealPlan.recipes.push(recipe[0])
-    this.setState({mealPlan})
-  }
-  handleAddItemMealPlan = (item) => {
-    let mealPlan = this.state.mealPlan;
-    mealPlan.items.push(item)
-    console.log(mealPlan)
-    this.setState({mealPlan})
-  }
-  handleRemoveRecipe = (i) => {
-    let mealPlan = this.state.mealPlan;
-    let recipes = mealPlan.recipes.filter((recipe,index) => {
-      return index !== i
+  handleUpdateMealplan = () => {
+    fetch(config.API_ENDPOINT + '/api/mealplan', {
+      method: 'GET'
     })
-    mealPlan = {...this.state.mealPlan, recipes}
-    this.setState({mealPlan})
-  }
-  handleRemoveItem = (i) => {
-    let mealPlan = this.state.mealPlan;
-    let items = mealPlan.items.filter((item, index) => {
-      return index !== i
+    .then(res => res.json())
+    .then(response => {
+      return this.getMealplan(response)
     })
-    mealPlan = {...this.state.mealPlan, items}
-    this.setState({mealPlan})
   }
-  handleEmptyMealPlan = () => {
-    let mealPlan = {recipes: [], items: []}
-    this.setState({mealPlan})
-  }
-  generateShoppingList = () => {
-
+  handleUpdateShoppingList = () => {
+    fetch(config.API_ENDPOINT + '/api/shopping-list', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(response => {
+      return this.getShoppingList(response)
+    })
   }
   render(){
   return (
@@ -202,7 +168,7 @@ class App extends Component {
             recipes={this.state.recipes}
             history={history} 
             handleUpdateRecipes={this.handleUpdateRecipes}
-            handleAddRecipeMealPlan={this.handleAddRecipeMealPlan}
+            handleUpdateMealplan={this.handleUpdateMealplan}
             
           />
         }
@@ -223,7 +189,7 @@ class App extends Component {
             match={match} 
             history={history}
             recipes={this.state.recipes}
-            handleUseRecipe={this.handleUseRecipe} 
+            handleUpdateInventory={this.handleUpdateInventory} 
           />
         }
       />
@@ -243,22 +209,21 @@ class App extends Component {
         render={({history}) =>
           <Mealplan 
             history={history}
-            mealPlan={this.state.mealPlan}
-            generateShoppingList={this.generateShoppingList}
-            handleRemoveRecipe={this.handleRemoveRecipe}
-            handleRemoveItem={this.handleRemoveItem}
-            handleEmptyMealPlan={this.handleEmptyMealPlan}
-            handleAddItemMealPlan={this.handleAddItemMealPlan}
+            mealplan={this.state.mealplan}
+            handleUpdateShoppingList={this.handleUpdateShoppingList}
+            handleUpdateMealplan={this.handleUpdateMealplan}
           />
         }
       />
       <Route
-        path='/sign-up'
-        component={SignUp}
-      />
-      <Route 
-        path='/log-in'
-        component={LogIn}
+        path='/shopping-list'
+        render={({history}) =>
+          <ShoppingList 
+            history={history}
+            shoppingList={this.state.shoppingList}
+            handleUpdateShoppingList={this.handleUpdateShoppingList}
+          />
+        }
       />
     </main>
   );

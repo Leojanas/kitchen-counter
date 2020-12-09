@@ -86,7 +86,7 @@ class EditRecipe extends Component {
         let recipe = this.state.recipe;
         recipe = Helpers.stringifyRecipeInstructions(recipe)
         fetch(config.API_ENDPOINT + `/api/recipes/${this.props.match.params.id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },

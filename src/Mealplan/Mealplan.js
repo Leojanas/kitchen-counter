@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Recipe from '../Recipe/recipe';
 import FormIngredient from '../FormIngredient/form-ingredient';
 import InventoryItem from '../InventoryItem/inventory-item';
+import config from '../config';
 
 class Mealplan extends Component {
     constructor(props){
@@ -15,10 +16,9 @@ class Mealplan extends Component {
         const id = this.state.count;
         let count = this.state.count + 1;
         this.setState({count})
-
         let item = {
-            id: id,
-            name: '',
+            id: id,  
+            item_name: '',
             qty: 0,
             unit: ''
         };
@@ -40,12 +40,36 @@ class Mealplan extends Component {
         let item = this.state.ingredients.filter(item => {
             return item.id === id
         })[0]
-        let ingredients = this.state.ingredients.filter(item => {
-            return item.id !== id
+        console.log(item)
+        fetch(config.API_ENDPOINT + '/api/mealplan', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(item)
         })
-        this.setState({ingredients})
-        this.props.handleAddItemMealPlan(item)
-
+        .then(res => {
+            let ingredients = this.state.ingredients.filter(item => {
+                return item.id !== id
+            })
+            this.setState({ingredients})
+            this.props.handleUpdateMealplan()
+        })
+    }
+    handleRemoveItem = (id) => {
+        fetch(config.API_ENDPOINT + '/api/mealplan', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({id: id})
+        })
+        .then(response => {
+            if(!response.ok){
+                console.log(response)
+            }
+            this.props.handleUpdateMealplan()
+        })
     }
     handleUpdateIngredient = (event) => {
         let value = event.target.value;
@@ -60,23 +84,33 @@ class Mealplan extends Component {
         ingredients[index] = ingredient;
         this.setState({ingredients})
     }
+    generateShoppingList = () => {
+        fetch(config.API_ENDPOINT + '/api/shopping-list', {
+            method: 'POST'
+        })
+        .then(res => {
+            if(!res.ok){
+                console.log(res)
+            }
+            this.props.handleUpdateShoppingList();
+            this.props.history.push('/shopping-list')
+        })
+    }
     render () {
-        const recipes = this.props.mealPlan.recipes.map((recipe, index) => {
+        const recipes = this.props.mealplan.recipes.map((recipe, index) => {
             return <Recipe 
-                key={index} 
+                key={recipe.id} 
                 recipe={recipe}
-                remove={index} 
                 use='mealPlan'
-                handleRemoveRecipe={this.props.handleRemoveRecipe}
+                handleUpdateMealplan={this.props.handleUpdateMealplan}
             />
         })
-        const items = this.props.mealPlan.items.map((item, index) => {
+        const items = this.props.mealplan.items.map((item, index) => {
             return <InventoryItem 
-                key={index}
+                key={item.id}
                 item={item}
-                remove={index}
                 use='mealPlan'
-                handleRemoveItem={this.props.handleRemoveItem}
+                handleRemoveItem={this.handleRemoveItem}
             />
         })
         const formItems = this.state.ingredients.map(item => {
@@ -99,7 +133,6 @@ class Mealplan extends Component {
                         <tr>
                             <th>Recipe Name</th>
                             <th>Category</th>
-                            <th>Rating</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,8 +155,8 @@ class Mealplan extends Component {
                 </table>
                 <button type='button' onClick={this.handleAddItemMealPlan}>Add Item</button>
                 <div>
-                    <button type='button' onClick={this.props.generateShoppingList}>Generate Shopping List</button>
-                    <button type='button' onClick={this.props.handleEmptyMealPlan}>Empty Meal Plan</button>
+                    <button type='button' onClick={this.generateShoppingList}>Generate Shopping List</button>
+                    <button type='button' onClick={() => this.handleRemoveItem('all')}>Empty Meal Plan</button>
                 </div>
             </section>
     )

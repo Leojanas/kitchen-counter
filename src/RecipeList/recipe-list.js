@@ -12,8 +12,9 @@ class RecipeList extends Component {
                 return <Recipe 
                     key={index} 
                     recipe={recipe} 
+                    history={this.props.history}
                     handleUpdateRecipes={this.props.handleUpdateRecipes}
-                    handleAddRecipeMealPlan={this.props.handleAddRecipeMealPlan}
+                    handleUpdateMealplan={this.props.handleUpdateMealplan}
                     />
             })
         }

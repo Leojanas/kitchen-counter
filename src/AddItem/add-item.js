@@ -14,6 +14,7 @@ class AddItem extends Component {
             unit: e.target.unit.value,
             expiration: e.target.expiration.value
         }
+        console.log(item)
         fetch(config.API_ENDPOINT + '/api/inventory', {
             method: 'POST',
             headers: {

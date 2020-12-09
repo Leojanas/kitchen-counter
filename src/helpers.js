@@ -7,14 +7,14 @@ const Helpers = {
         })[0]
     },
     getIngredientsFromRecipe(recipe){
-        return recipe.ingredients.map((item, index) => {
-            return <InventoryItem key={index} item={item} recipe={true} />
-        })
+            return recipe.ingredients.map((item, index) => {
+                return <InventoryItem key={index} item={item} recipe={true} />
+            })
     },
     getInstructionsFromRecipe(recipe){
-        return recipe.instructions.map((item, index) => {
-            return <li key={index}>{item.content}</li>
-        })
+            return recipe.instructions.map((item, index) => {
+                return <li key={index}>{item.content}</li>
+            })
     },
     getQtyFromName(items, name){
         let item = items.filter(i => {
