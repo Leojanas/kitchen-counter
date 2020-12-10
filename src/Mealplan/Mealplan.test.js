@@ -7,7 +7,7 @@ import Recipes from '../recipes';
 // this is the test case
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<BrowserRouter><Mealplan recipes={Recipes} mealPlan={{recipes: Recipes, items: []}}/></BrowserRouter>, div);
+  ReactDOM.render(<BrowserRouter><Mealplan recipes={Recipes} mealplan={{recipes: Recipes, items: []}}/></BrowserRouter>, div);
 
   ReactDOM.unmountComponentAtNode(div);
 });
