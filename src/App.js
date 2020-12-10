@@ -222,6 +222,7 @@ class App extends Component {
             history={history}
             shoppingList={this.state.shoppingList}
             handleUpdateShoppingList={this.handleUpdateShoppingList}
+            handleUpdateInventory={this.handleUpdateInventory}
           />
         }
       />

@@ -15,7 +15,22 @@ handleClearShoppingList = () => {
     })
 }
 handleUseShoppingList = () => {
-//need api endpoint written for this
+    let items = this.props.shoppingList;
+fetch(config.API_ENDPOINT + '/api/inventory', {
+    method: 'POST',
+    headers: {
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(items)
+})
+.then(res => {
+    if(!res.ok){
+        console.log(res)
+    }
+    this.handleClearShoppingList();
+    this.props.handleUpdateInventory();
+    this.props.history.push('/inventory')
+})
 }
 render() {
     const items = this.props.shoppingList.map((item, index) => {
@@ -43,7 +58,7 @@ render() {
             </table>
             <div>
                 <button type='button' onClick={this.handleClearShoppingList}>Clear Shopping List</button>
-                <button type='button' onClick={() => this.handleUseShoppingList}>Use Shopping List (Add to Inventory)</button>
+                <button type='button' onClick={this.handleUseShoppingList}>Use Shopping List (Add to Inventory)</button>
             </div>
         </section>
     )
