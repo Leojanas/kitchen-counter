@@ -31,7 +31,7 @@ class EditRecipe extends Component {
         let emptyIngredient = {
             name: '',
             qty: 0,
-            unit: ''
+            unit: 'pounds'
         }
         let ingredients = this.state.recipe.ingredients;
         ingredients.push(emptyIngredient); 

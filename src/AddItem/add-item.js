@@ -49,6 +49,7 @@ class AddItem extends Component {
                             <option value='pounds'>pounds</option>
                             <option value='ounces'>ounces</option>
                             <option value='gallons'>gallons</option>
+                            <option value='quarts'>quarts</option>
                             <option value='pints'>pints</option>
                             <option value='cups'>cups</option>
                             <option value='tablespoons'>tablespoons</option>

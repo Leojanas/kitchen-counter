@@ -21,7 +21,17 @@ class FormIngredient extends Component {
             <tr>
                 <td><input id={`ingredients-${this.props.number}-item_name`} value={this.props.item.item_name} onChange={this.props.handleUpdateIngredient}/></td>
                 <td><input id={`ingredients-${this.props.number}-qty`} value={this.props.item.qty} onChange={this.props.handleUpdateIngredient}/></td>
-                <td><input id={`ingredients-${this.props.number}-unit`} value={this.props.item.unit} onChange={this.props.handleUpdateIngredient}/></td>
+                <td><select name='unit' id={`ingredients-${this.props.number}-unit`} value={this.props.item.unit} onChange={this.props.handleUpdateIngredient}>
+                            <option value='pounds'>pounds</option>
+                            <option value='ounces'>ounces</option>
+                            <option value='gallons'>gallons</option>
+                            <option value='quarts'>quarts</option>
+                            <option value='pints'>pints</option>
+                            <option value='cups'>cups</option>
+                            <option value='tablespoons'>tablespoons</option>
+                            <option value='teaspoons'>teaspoons</option>
+                            <option value='each'>each</option>
+                        </select></td>
                  {buttons}           
             </tr>
         )

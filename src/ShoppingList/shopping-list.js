@@ -3,17 +3,6 @@ import InventoryItem from '../InventoryItem/inventory-item';
 import config from '../config';
 
 class ShoppingList extends Component {
-handleClearShoppingList = () => {
-    fetch(config.API_ENDPOINT + '/api/shopping-list', {
-        method: 'DELETE'
-    })
-    .then(res => {
-        if(!res.ok){
-            console.log(res)
-        }
-        this.props.handleUpdateShoppingList();
-    })
-}
 handleUseShoppingList = () => {
     let items = this.props.shoppingList;
 fetch(config.API_ENDPOINT + '/api/inventory', {
@@ -57,8 +46,7 @@ render() {
                 </tbody>
             </table>
             <div>
-                <button type='button' onClick={this.handleClearShoppingList}>Clear Shopping List</button>
-                <button type='button' onClick={this.handleUseShoppingList}>Use Shopping List (Add to Inventory)</button>
+                <button type='button' onClick={this.handleUseShoppingList}>Complete Shopping</button>
             </div>
         </section>
     )

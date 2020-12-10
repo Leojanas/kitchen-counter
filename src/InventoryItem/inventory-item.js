@@ -18,6 +18,9 @@ class InventoryItem extends Component {
         if(this.props.use === 'inventory'){
             buttons = (
             <>
+                <td><Link to={`/inventory/${this.props.item.id}`}>{this.props.item.item_name}</Link></td>
+                <td>{this.props.item.qty}</td>
+                <td>{this.props.item.unit}</td>
                 <td><button><Link to={`/inventory/${this.props.item.id}/edit`} >Edit</Link></button></td>
                 <td><button type='button' onClick={() => this.handleDeleteItem(this.props.item.id)}>Delete</button></td>
             </>
@@ -25,16 +28,25 @@ class InventoryItem extends Component {
         }else if(this.props.use === 'mealPlan'){
             buttons = (
                 <>
+                    <td>{this.props.item.item_name}</td>
+                    <td>{this.props.item.qty}</td>
+                    <td>{this.props.item.unit}</td>
                     <td><button type='button' onClick={() => this.props.handleRemoveItem(this.props.remove)}>Remove</button></td>
+                </>
+            )
+        }else if(this.props.use === 'shoppingList'){
+            buttons = (
+                <>
+                    <td>{this.props.item.item_name}</td>
+                    <td>{this.props.item.qty}</td>
+                    <td>{this.props.item.unit}</td>
                 </>
             )
         }
 
         return (
                 <tr>
-                    <td><Link to={`/inventory/${this.props.item.id}`}>{this.props.item.item_name}</Link></td>
-                    <td>{this.props.item.qty}</td>
-                    <td>{this.props.item.unit}</td>
+
                     {buttons}
                     
                 </tr>
