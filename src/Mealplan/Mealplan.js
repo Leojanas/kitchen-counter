@@ -20,7 +20,7 @@ class Mealplan extends Component {
             id: id,  
             item_name: '',
             qty: 0,
-            unit: ''
+            unit: 'pounds'
         };
         let ingredients = this.state.ingredients;
         ingredients.push(item);
@@ -57,6 +57,7 @@ class Mealplan extends Component {
         })
     }
     handleRemoveItem = (id) => {
+        console.log(id)
         fetch(config.API_ENDPOINT + '/api/mealplan', {
             method: 'DELETE',
             headers: {

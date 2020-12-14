@@ -33,8 +33,11 @@ class RecipeDetail extends Component {
         let instructions;
         if(this.props.recipes.length > 0){
             const recipe = Helpers.getItemById(this.props.recipes, this.props.match.params.id)
-            ingredients = Helpers.getIngredientsFromRecipe(recipe)
-            instructions = Helpers.getInstructionsFromRecipe(recipe)
+            console.log(recipe)
+            if(recipe){
+                ingredients = Helpers.getIngredientsFromRecipe(recipe)
+                instructions = Helpers.getInstructionsFromRecipe(recipe)
+            }
         return (
             <div>
                 <h2>{recipe.recipe_name}</h2>

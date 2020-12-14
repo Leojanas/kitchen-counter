@@ -21,6 +21,14 @@ fetch(config.API_ENDPOINT + '/api/inventory', {
     this.props.history.push('/inventory')
 })
 }
+handleClearShoppingList = () => {
+    fetch(config.API_ENDPOINT + '/api/shopping-list',{
+        method: 'DELETE',
+        headers: {
+            'Content-Type':'application/json'
+        }
+    })
+}
 render() {
     const items = this.props.shoppingList.map((item, index) => {
         return <InventoryItem 

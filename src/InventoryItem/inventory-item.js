@@ -31,10 +31,18 @@ class InventoryItem extends Component {
                     <td>{this.props.item.item_name}</td>
                     <td>{this.props.item.qty}</td>
                     <td>{this.props.item.unit}</td>
-                    <td><button type='button' onClick={() => this.props.handleRemoveItem(this.props.remove)}>Remove</button></td>
+                    <td><button type='button' onClick={() => this.props.handleRemoveItem(this.props.item.id)}>Remove</button></td>
                 </>
             )
         }else if(this.props.use === 'shoppingList'){
+            buttons = (
+                <>
+                    <td>{this.props.item.item_name}</td>
+                    <td>{this.props.item.qty}</td>
+                    <td>{this.props.item.unit}</td>
+                </>
+            )
+        }else {
             buttons = (
                 <>
                     <td>{this.props.item.item_name}</td>
@@ -48,7 +56,6 @@ class InventoryItem extends Component {
                 <tr>
 
                     {buttons}
-                    
                 </tr>
         )
     }

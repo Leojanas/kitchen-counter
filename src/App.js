@@ -62,8 +62,11 @@ class App extends Component {
     this.setState({items})
   }
   getRecipes = (recipes) => {
-    recipes = Helpers.makeInstructionsArray(recipes)
-    this.setState({recipes})
+    Helpers.makeInstructionsArray(recipes)
+    .then(recipes => {
+      return this.setState({recipes})
+    })
+
   }
   getMealplan = (mealplan) => {
     this.setState({mealplan})

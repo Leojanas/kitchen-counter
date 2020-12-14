@@ -94,7 +94,7 @@ class EditRecipe extends Component {
         })
         .then(() => {
             this.props.handleUpdateRecipes()
-            this.props.history.push(`/recipes/${this.state.recipe.id}`)
+            this.props.history.push(`/recipes`)
         })
 
     }

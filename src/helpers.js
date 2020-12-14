@@ -40,7 +40,7 @@ const Helpers = {
         return recipe;
     },
     makeInstructionsArray(recipes){
-        recipes = recipes.map(recipe => {
+        let promises = recipes.map(recipe => {
             let instructionString = recipe.instructions;
             let instructionsArray = instructionString.split('=');
             instructionsArray.pop()
@@ -56,7 +56,10 @@ const Helpers = {
             recipe.instructions = finalArray
             return recipe
           })
-          return recipes
+        return Promise.all(promises)
+          .then(recipes => {
+            return recipes
+          })
     }
 
 }
