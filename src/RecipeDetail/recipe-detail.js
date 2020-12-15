@@ -4,12 +4,15 @@ import Helpers from '../helpers';
 import config from '../config';
 
 class RecipeDetail extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {error: false}
+    }
     handleClickBack = () => {
         this.props.history.goBack()
     }
     handleUseRecipe = (recipe_id) => {
         let body = {recipe_id: recipe_id};
-        console.log(body)
         fetch(config.API_ENDPOINT + '/api/inventory', {
             method: 'PATCH',
             headers: {
@@ -19,16 +22,24 @@ class RecipeDetail extends Component {
         })
         .then((res) => {
             if(!res.ok){
-                console.log(res)
+                this.setState({error: true})
+            }else{
+                this.setState({error: false})
+                this.props.handleUpdateInventory()
+                this.props.history.push('/inventory')
             }
-            this.props.handleUpdateInventory()
-            this.props.history.push('/inventory')
         })
         .catch(error => {
             console.log(error)
         })
     }
     render() {
+        let error;
+        if(this.state.error){
+            error = (<div>
+                <p>One or more items not found in sufficient quantity in inventory.  Recipe cannot be used.</p>
+            </div>)
+        }
         let ingredients;
         let instructions;
         if(this.props.recipes.length > 0){
@@ -68,6 +79,7 @@ class RecipeDetail extends Component {
                     <button><Link to={`/recipes/${this.props.match.params.id}/edit`}>Edit Recipe</Link></button>
                     <button type='button' onClick={() => this.handleUseRecipe(recipe.id)}>Use Recipe</button>
                 </div>
+                {error}
             </div>
         )
         }
