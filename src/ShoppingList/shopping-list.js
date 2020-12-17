@@ -18,7 +18,6 @@ fetch(config.API_ENDPOINT + '/api/inventory', {
     }
     this.handleClearShoppingList();
     this.props.handleUpdateInventory();
-    this.props.history.push('/inventory')
 })
 }
 handleClearShoppingList = () => {
@@ -27,6 +26,10 @@ handleClearShoppingList = () => {
         headers: {
             'Content-Type':'application/json'
         }
+    })
+    .then(() => {
+        this.props.handleUpdateShoppingList()
+        this.props.history.push('/inventory')
     })
 }
 render() {

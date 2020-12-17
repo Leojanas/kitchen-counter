@@ -29,7 +29,7 @@ class EditRecipe extends Component {
     }
     handleAddIngredient = () => {
         let emptyIngredient = {
-            name: '',
+            item_name: '',
             qty: 0,
             unit: 'pounds'
         }
@@ -51,6 +51,9 @@ class EditRecipe extends Component {
         let id = event.target.id.split('-');
         let index= id[1] -1;
         let attribute = id[2];
+        if(attribute === 'item_name'){
+            value = value.toLowerCase();
+        }
         let ingredient = this.state.recipe.ingredients[index];
         ingredient[attribute] = value;
         let ingredients = this.state.recipe.ingredients;
@@ -67,6 +70,26 @@ class EditRecipe extends Component {
         instructions.push(newStep)
         let recipe = {...this.state.recipe, instructions}
         this.setState({recipe})
+    }
+    handleRemoveStep = (event) => {
+        let number = Number(event.target.id.split('-')[1]);
+        if(number === this.state.recipe.instructions.length){
+            let instructions = this.state.recipe.instructions.filter(inst => {
+                return inst.number !== number
+            })
+            let recipe = {...this.state.recipe, instructions}
+            this.setState({recipe})
+        }else{
+            let instructions = this.state.recipe.instructions
+            for(let i=number;i<this.state.recipe.instructions.length;i++){
+                let content = this.state.recipe.instructions[i].content
+                instructions[i-1] = {...instructions[i-1], content}
+            }
+            instructions.pop()
+            let recipe = {...this.state.recipe, instructions}
+            this.setState({recipe})
+        }
+
     }
     handleUpdateInstruction = (event) => {
         let content = event.target.value;
@@ -116,6 +139,7 @@ class EditRecipe extends Component {
                 <tr key={index}>
                 <td>Step {i.number}</td>
                 <td><input id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/></td>
+                <td><button type='button' id={`remove-${i.number}`} onClick={this.handleRemoveStep}>Remove</button></td>
                 </tr>
             )
             })
