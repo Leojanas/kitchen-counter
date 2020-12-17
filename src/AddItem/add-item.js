@@ -9,12 +9,11 @@ class AddItem extends Component {
         e.preventDefault();
         //add validation
         const item = {
-            item_name: e.target.name.value,
+            item_name: e.target.name.value.toLowerCase(),
             qty: e.target.qty.value,
             unit: e.target.unit.value,
             expiration: e.target.expiration.value
         }
-        console.log(item)
         fetch(config.API_ENDPOINT + '/api/inventory', {
             method: 'POST',
             headers: {

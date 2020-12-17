@@ -46,6 +46,9 @@ class AddRecipe extends Component {
         let id = event.target.id.split('-');
         let index= id[1] -1;
         let attribute = id[2];
+        if(attribute === 'item_name'){
+            value = value.toLowerCase()
+        }
         let ingredient = this.state.recipe.ingredients[index];
         ingredient[attribute] = value;
         let ingredients = this.state.recipe.ingredients;
@@ -87,7 +90,6 @@ class AddRecipe extends Component {
     handleAddRecipe = (e) => {
         e.preventDefault();
         let recipe = Helpers.stringifyRecipeInstructions(this.state.recipe)
-        console.log(recipe)
         fetch(config.API_ENDPOINT + '/api/recipes', {
             method: 'POST',
             headers: {
