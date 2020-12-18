@@ -133,6 +133,7 @@ class Mealplan extends Component {
                     <thead>
                         <tr>
                             <th>Recipe Name</th>
+                            <th>Qty</th>
                             <th>Category</th>
                         </tr>
                     </thead>

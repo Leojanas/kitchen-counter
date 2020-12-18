@@ -74,6 +74,26 @@ class AddRecipe extends Component {
         let recipe = {...this.state.recipe, instructions}
         this.setState({recipe})
     }
+    handleRemoveStep = (event) => {
+        let number = Number(event.target.id.split('-')[1]);
+        if(number === this.state.recipe.instructions.length){
+            let instructions = this.state.recipe.instructions.filter(inst => {
+                return inst.number !== number
+            })
+            let recipe = {...this.state.recipe, instructions}
+            this.setState({recipe})
+        }else{
+            let instructions = this.state.recipe.instructions
+            for(let i=number;i<this.state.recipe.instructions.length;i++){
+                let content = this.state.recipe.instructions[i].content
+                instructions[i-1] = {...instructions[i-1], content}
+            }
+            instructions.pop()
+            let recipe = {...this.state.recipe, instructions}
+            this.setState({recipe})
+        }
+
+    }
     handleUpdateInstruction = (event) => {
         let content = event.target.value;
         let number = Number(event.target.id.split('-')[1]);

@@ -24,12 +24,10 @@ class ItemDetail extends Component {
     render() {
         const item = Helpers.getItemById(this.props.items, this.props.match.params.id)
         if(item){
-            let expiration =  item.expiration ? item.expiration.split('T')[0] : null
         return (
             <div>
                 <h3>{item.item_name}</h3>
                 <p>Qty: {item.qty} {item.unit}</p>
-                <p>Expires on: {expiration}</p>
                 <div>
                     <button id='back' onClick={this.handleClickBack}>Back</button>
                     <button id='edit' onClick={this.handleClickEdit}>Edit</button>

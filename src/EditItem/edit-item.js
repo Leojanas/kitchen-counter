@@ -9,8 +9,7 @@ class EditItem extends Component {
     handleEditItem = (e) => {
         e.preventDefault();
         let item = Helpers.getItemById(this.props.items, this.props.match.params.id)
-        item.qty = e.target.qty.value 
-        item.expiration = e.target.expiration.value
+        item.qty = e.target.qty.value
         item.unit = e.target.unit.value
         fetch(config.API_ENDPOINT + `/api/inventory/${item.id}`, {
             method: 'PUT',
@@ -51,14 +50,6 @@ class EditItem extends Component {
                             <option value='each'>each</option>
                         </select>
                     <br />
-                    <label htmlFor='expiration'>Expires on: </label>
-                    <input 
-                        id='expiration' 
-                        name='expiration' 
-                        type='date' 
-                        defaultValue={item.expiration?item.expiration.split('T')[0]:null}  
-                    />
-
                     <div>
                         <button type='button' onClick={this.handleClickBack}>Back</button>
                         <button type='submit'>Save</button>

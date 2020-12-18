@@ -57,6 +57,7 @@ class Recipe extends Component {
             buttons = (
                 <>
                 <td><Link to={`/recipes/${this.props.recipe.recipe_id}`}>{this.props.recipe.recipe_name}</Link></td>
+                <td>{this.props.recipe.qty}</td>
                 <td>{this.props.recipe.category}</td>
                 <td><button type='button' onClick={() => this.handleRemoveRecipe(this.props.recipe.id)}>Remove</button></td>
             </>

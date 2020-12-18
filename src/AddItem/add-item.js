@@ -11,8 +11,7 @@ class AddItem extends Component {
         const item = {
             item_name: e.target.name.value.toLowerCase(),
             qty: e.target.qty.value,
-            unit: e.target.unit.value,
-            expiration: e.target.expiration.value
+            unit: e.target.unit.value
         }
         fetch(config.API_ENDPOINT + '/api/inventory', {
             method: 'POST',
@@ -25,7 +24,6 @@ class AddItem extends Component {
             if(!res.ok){
                 console.log(res)
             }
-            res.json()
         })
         .then(() => {
             this.props.handleUpdateInventory()
@@ -55,8 +53,6 @@ class AddItem extends Component {
                             <option value='teaspoons'>teaspoons</option>
                             <option value='each'>each</option>
                         </select>
-                        <label htmlFor='expiration'>Expires on: </label>
-                        <input id='expiration' name='expiration' type='date' />
                         <div>
                             <button type='submit'>Add Item</button>
                             <button type='button' onClick={this.handleClickBack}>Back</button>
