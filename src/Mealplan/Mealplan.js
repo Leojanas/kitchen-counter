@@ -40,7 +40,6 @@ class Mealplan extends Component {
         let item = this.state.ingredients.filter(item => {
             return item.id === id
         })[0]
-        console.log(item)
         fetch(config.API_ENDPOINT + '/api/mealplan', {
             method: 'POST',
             headers: {
@@ -57,7 +56,6 @@ class Mealplan extends Component {
         })
     }
     handleRemoveItem = (id) => {
-        console.log(id)
         fetch(config.API_ENDPOINT + '/api/mealplan', {
             method: 'DELETE',
             headers: {
