@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import './app.css';
 import Home from './Home/home';
 import Inventory from './Inventory/inventory';
 import RecipeList from './RecipeList/recipe-list';
 import RecipeDetail from './RecipeDetail/recipe-detail';
-import ItemDetail from './ItemDetail/item-detail';
 import EditItem from './EditItem/edit-item';
 import EditRecipe from './EditRecipe/edit-recipe';
 import AddItem from './AddItem/add-item';
@@ -143,15 +143,6 @@ class App extends Component {
             handleUpdateInventory={this.handleUpdateInventory}
           />
         }
-      />
-      <Route
-        exact path='/inventory/:id'
-        render={({match, history}) => <ItemDetail 
-        items={this.state.items} 
-        match={match} 
-        history={history}
-        handleUpdateInventory={this.handleUpdateInventory}
-        />}
       />
       <Route
         path='/inventory/:id/edit'

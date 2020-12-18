@@ -18,7 +18,7 @@ class InventoryItem extends Component {
         if(this.props.use === 'inventory'){
             buttons = (
             <>
-                <td><Link to={`/inventory/${this.props.item.id}`}>{this.props.item.item_name}</Link></td>
+                <td>{this.props.item.item_name}</td>
                 <td>{this.props.item.qty}</td>
                 <td>{this.props.item.unit}</td>
                 <td><button><Link to={`/inventory/${this.props.item.id}/edit`} >Edit</Link></button></td>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Helpers from '../helpers';
 import config from '../config';
+import './recipe-detail.css';
 
 class RecipeDetail extends Component {
     constructor(props) {
@@ -51,11 +52,12 @@ class RecipeDetail extends Component {
         return (
             <div>
                 <h2>{recipe.recipe_name}</h2>
-                <p>{recipe.category}</p>
-                <p>Rating: {recipe.rating}/5</p>
-                <section>
+                <p className='center'>Category: {recipe.category}</p>
+                <p className= 'center'>Rating: {recipe.rating}/5</p>
+                <div className='group'>
+                <section className='item'>
                     <h3>Ingredients</h3>
-                    <table>
+                    <table className='center-div'>
                         <thead>
                             <tr>
                                 <th>Ingredient</th>
@@ -68,13 +70,14 @@ class RecipeDetail extends Component {
                         </tbody>
                     </table>
                 </section>
-                <section>
+                <section className='item'>
                     <h3>Instructions</h3>
                     <ol>
                         {instructions}
                     </ol>
                 </section>
-                <div>
+                </div>
+                <div className='center-div small-group'>
                     <button type='button' onClick={this.handleClickBack}>Back</button>
                     <button><Link to={`/recipes/${this.props.match.params.id}/edit`}>Edit Recipe</Link></button>
                     <button type='button' onClick={() => this.handleUseRecipe(recipe.id)}>Use Recipe</button>
