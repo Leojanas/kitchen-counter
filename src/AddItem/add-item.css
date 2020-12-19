@@ -1,0 +1,27 @@
+#qty{
+    width: 50px;
+}
+#name{
+    width: 130px;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+.form-item label{
+    text-align: right;
+    float: left;
+    width: 80px;
+}
+.form-item select{
+   margin-left: 80px;
+}
+@media screen and (min-width: 500px){
+    .form-group{
+        flex-direction: row;
+        justify-content: center;
+    }
+    .form-item select{
+        margin-left: 10px;
+    }
+}

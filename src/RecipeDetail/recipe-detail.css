@@ -1,34 +1,22 @@
-.group{
+.recipe-detail-group{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-.small-group{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-}
-.item{
+.recipe-detail-item{
     padding: 20px;
 }
 h3{
     text-align: center;
     background-color: #0e7fff;
 }
-.center-div{
-    margin-left: auto;
-    margin-right: auto;
-}
 
-@media screen and (min-width: 600px){
-    .group{
+@media screen and (min-width: 500px){
+    .recipe-detail-group{
         flex-direction: row;
         justify-content: space-between;
     }
-    .item{
+    .recipe-detail-item{
         justify-content: space-around;
-    }
-    button{
-        margin: 10px;
     }
 }

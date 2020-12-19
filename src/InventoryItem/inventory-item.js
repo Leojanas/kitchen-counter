@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import config from '../config';
+import './inventory-item.css';
 
 
 class InventoryItem extends Component {
@@ -53,7 +54,7 @@ class InventoryItem extends Component {
         }
 
         return (
-                <tr>
+                <tr className='inventory-item'>
 
                     {buttons}
                 </tr>

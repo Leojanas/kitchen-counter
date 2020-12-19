@@ -1,0 +1,24 @@
+.group{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    margin-bottom: 10px;
+}
+.item{
+    flex: 0 0 45px;
+    align-self: center;
+    height: 25px;
+}
+.large-item{
+    flex: 1 1 200px;
+}
+@media screen and (min-width: 400px){
+    .item{
+        margin: 10px;
+    }
+}
+@media screen and (min-width: 700px){
+    .large-item{
+        flex: 0 0 570px;
+    }
+}

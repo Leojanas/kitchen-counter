@@ -33,7 +33,9 @@ class RecipeList extends Component {
                             {recipes}
                         </tbody>
                     </table>
-                    <button type='button' onClick={this.handleAddRecipe}>Add Recipe</button>
+                    <div className='center-div small-group'>
+                        <button type='button' onClick={this.handleAddRecipe}>Add Recipe</button>
+                    </div>
                 </section>
         )
     }

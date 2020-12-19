@@ -68,14 +68,15 @@ class Recipe extends Component {
                 <td><Link to={`/recipes/${this.props.recipe.id}`}>{this.props.recipe.recipe_name}</Link></td>
                 <td>{this.props.recipe.category}</td>
                 <td>{this.props.recipe.rating}</td>
-                <td><button><Link to={`/recipes/${this.props.recipe.id}/edit`}>Edit</Link></button></td>                
-                <td><button type='button' onClick={() => this.handleDeleteRecipe(this.props.recipe.id)}>Delete</button></td>
-                <td><button type='button' onClick={() => this.handleAddRecipeMealPlan(this.props.recipe.id)}>Add to Meal Plan</button></td>
+                <td>
+                <button><Link to={`/recipes/${this.props.recipe.id}/edit`}>Edit</Link></button>                
+                <button type='button' onClick={() => this.handleDeleteRecipe(this.props.recipe.id)}>Delete</button>
+                <button type='button' onClick={() => this.handleAddRecipeMealPlan(this.props.recipe.id)}>Add to Meal Plan</button>
+                </td>
                 </>)
         }
         return (
             <tr>
-
                 {buttons}
             </tr>
         )

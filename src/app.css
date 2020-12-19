@@ -1,9 +1,12 @@
-main{
+body{
     background-color: #86bfff;
 }
 h2{
     text-align: center;
-    margin: 10px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    padding: 2px;
+    background-color: #0e7fff;
 }
 button{
     background-color: #ff8e0e;
@@ -37,4 +40,23 @@ button a:active{
 }
 .center{
     text-align: center;
+}
+.center-div{
+    margin-left: auto;
+    margin-right: auto;
+}
+.small-group{
+    margin-top: 30px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+@media screen and (min-width: 500px){
+    table{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .center-div button{
+        margin: 10px;
+    }
 }

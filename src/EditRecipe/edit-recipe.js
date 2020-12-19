@@ -3,6 +3,7 @@ import FormIngredient from '../FormIngredient/form-ingredient';
 import Helpers from '../helpers';
 import PropTypes from 'prop-types';
 import config from '../config';
+import './edit-recipe.css';
 
 class EditRecipe extends Component {  
     constructor(props) {
@@ -136,27 +137,36 @@ class EditRecipe extends Component {
             })   
             formInstructions = this.state.recipe.instructions.map((i, index) => {
             return (
-                <tr key={index}>
-                <td>Step {i.number}</td>
-                <td><input id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/></td>
-                <td><button type='button' id={`remove-${i.number}`} onClick={this.handleRemoveStep}>Remove</button></td>
-                </tr>
+                <div className='group' key={index}>
+                <p className='item'>Step {i.number}</p>
+                <textarea className='large-item' id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/>
+                <button className='item' type='button' id={`remove-${i.number}`} onClick={this.handleRemoveStep}>Remove</button>
+                </div>
             )
             })
         return(
                 <form onSubmit={this.handleEditRecipe}>
-                    <label htmlFor='recipe_name'>Name: </label>
-                    <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
-                    <label htmlFor='category'>Category: </label>
-                    <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
-                        <option value='Main'>Main</option>
-                        <option value='Side'>Side</option>
-                        <option value='Dessert'>Dessert</option>
-                        <option value='Breakfast'>Breakfast</option>
-                        <option value='Lunch'>Lunch</option>
-                    </select>
-                    <label htmlFor='rating'>Rating: </label>
-                    <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
+                    <div className='form-group'>
+                        <div className='form-item'>
+                            <label htmlFor='recipe_name'>Name: </label>
+                            <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
+                        </div>
+                        <div className='form-item'>
+                            <label htmlFor='category'>Category: </label>
+                                <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
+                                    <option value='Main'>Main</option>
+                                    <option value='Side'>Side</option>
+                                    <option value='Dessert'>Dessert</option>
+                                    <option value='Breakfast'>Breakfast</option>
+                                    <option value='Lunch'>Lunch</option>
+                                </select>
+                        </div>
+                        <div className='form-item'>
+                            <label htmlFor='rating'>Rating: </label>
+                            <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
+                        </div>
+                    </div>
+
                     <fieldset>
                         <legend>Ingredients</legend>
                         <table>
@@ -175,14 +185,12 @@ class EditRecipe extends Component {
                     </fieldset>
                     <fieldset>
                         <legend>Instructions</legend>
-                        <table>
-                            <tbody>
-                                {formInstructions}
-                            </tbody>
-                        </table>
+                            {formInstructions}
                         <button type='button' onClick={this.handleAddStep}>Add Step</button>
                     </fieldset>
-                    <button type='submit'>Save Recipe</button>
+                    <div className='center-div small-group'>
+                        <button type='submit'>Save Recipe</button>
+                    </div>
                 </form>
         )
         }else{

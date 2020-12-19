@@ -144,17 +144,19 @@ class Mealplan extends Component {
                     <thead>
                         <tr>
                             <th>Item Name</th>
-                            <th>Quantity</th>
+                            <th>Qty</th>
                             <th>Unit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {items}
                         {formItems}
+                        <tr>
+                            <td><button type='button' onClick={this.handleAddItemMealPlan}>Add Item</button></td>
+                        </tr>
                     </tbody>
                 </table>
-                <button type='button' onClick={this.handleAddItemMealPlan}>Add Item</button>
-                <div>
+                <div className='center-div small-group'>
                     <button type='button' onClick={this.generateShoppingList}>Generate Shopping List</button>
                     <button type='button' onClick={() => this.handleRemoveItem('all')}>Empty Meal Plan</button>
                 </div>

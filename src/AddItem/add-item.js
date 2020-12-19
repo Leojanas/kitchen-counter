@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import config from '../config';
+import './add-item.css';
 
 class AddItem extends Component {
     handleClickBack = () => {
@@ -38,10 +39,16 @@ class AddItem extends Component {
                 <section>
                     <h2>Add Item</h2>
                     <form onSubmit={this.handleSubmitForm}>
-                        <label htmlFor='name'>Name: </label>
-                        <input id='name' name='name' />
-                        <label htmlFor='qty'>Quantity: </label>
-                        <input id='qty' name='qty' />
+                        <div className='form-group'>
+                        <div className='form-item'>
+                            <label htmlFor='name'>Name: </label>
+                            <input id='name' name='name' />
+                        </div>
+                        <div className='form-item'>
+                            <label htmlFor='qty'>Quantity: </label>
+                            <input id='qty' name='qty' />
+                        </div>
+                        <div className='form-item'>
                         <select name='unit' id='unit'>
                             <option value='pounds'>pounds</option>
                             <option value='ounces'>ounces</option>
@@ -53,11 +60,12 @@ class AddItem extends Component {
                             <option value='teaspoons'>teaspoons</option>
                             <option value='each'>each</option>
                         </select>
-                        <div>
+                        </div>                         
+                        </div>
+                        <div className='center-div small-group'>
                             <button type='submit'>Add Item</button>
                             <button type='button' onClick={this.handleClickBack}>Back</button>
                         </div>
-
                     </form>
                 </section>
         )

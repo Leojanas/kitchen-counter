@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FormIngredient from '../FormIngredient/form-ingredient';
 import Helpers from '../helpers';
 import config from '../config';
+import './add-recipe.css';
 
 class AddRecipe extends Component {  
     constructor(props) {
@@ -147,18 +148,26 @@ class AddRecipe extends Component {
         })
         return(
                 <form onSubmit={this.handleAddRecipe}>
-                    <label htmlFor='recipe_name'>Name: </label>
-                    <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
-                    <label htmlFor='category'>Category: </label>
-                    <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
-                        <option value='main'>Main</option>
-                        <option value='side'>Side</option>
-                        <option value='dessert'>Dessert</option>
-                        <option value='breakfast'>Breakfast</option>
-                        <option value='lunch'>Lunch</option>
-                    </select>
-                    <label htmlFor='rating'>Rating: </label>
-                    <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
+                    <div className='form-group'>
+                        <div className='form-item'>
+                            <label htmlFor='recipe_name'>Name: </label>
+                            <input name='recipe_name' id='recipe_name' value={this.state.recipe.recipe_name} onChange={this.handleChange}/>
+                        </div>
+                        <div className='form-item'>
+                            <label htmlFor='category'>Category: </label>
+                            <select name='category' id='category' value={this.state.recipe.category} onChange={this.handleChange}>
+                                <option value='main'>Main</option>
+                                <option value='side'>Side</option>
+                                <option value='dessert'>Dessert</option>
+                                <option value='breakfast'>Breakfast</option>
+                                <option value='lunch'>Lunch</option>
+                            </select>
+                        </div>
+                        <div className='form-item'>
+                            <label htmlFor='rating'>Rating: </label>
+                            <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
+                        </div>
+                    </div>
                     <fieldset>
                         <legend>Ingredients</legend>
                         <table>

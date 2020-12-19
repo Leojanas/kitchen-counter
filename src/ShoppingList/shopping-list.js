@@ -56,7 +56,7 @@ render() {
                     {items}
                 </tbody>
             </table>
-            <div>
+            <div className='center-div small-group'>
                 <button type='button' onClick={this.handleUseShoppingList}>Complete Shopping</button>
             </div>
         </section>

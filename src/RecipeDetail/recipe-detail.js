@@ -54,8 +54,8 @@ class RecipeDetail extends Component {
                 <h2>{recipe.recipe_name}</h2>
                 <p className='center'>Category: {recipe.category}</p>
                 <p className= 'center'>Rating: {recipe.rating}/5</p>
-                <div className='group'>
-                <section className='item'>
+                <div className='recipe-detail-group'>
+                <section className='recipe-detail-item'>
                     <h3>Ingredients</h3>
                     <table className='center-div'>
                         <thead>
@@ -70,7 +70,7 @@ class RecipeDetail extends Component {
                         </tbody>
                     </table>
                 </section>
-                <section className='item'>
+                <section className='recipe-detail-item'>
                     <h3>Instructions</h3>
                     <ol>
                         {instructions}

@@ -2,12 +2,12 @@
     padding: 5px;
     text-decoration: underline;
 }
-.group{
+.nav-group{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.item{
+.nav-item{
     padding: 0px;
     margin: 0px;
 }
@@ -24,11 +24,11 @@ a:active{
     color: black;
 }
 
-@media screen and (min-width: 600px){
+@media screen and (min-width: 500px){
     link{
         margin: 5px;
     }
-    .group{
+    .nav-group{
         flex-direction: row;
     }
 }

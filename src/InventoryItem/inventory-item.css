@@ -1,0 +1,7 @@
+.inventory-item{
+    border-style: solid;
+    border: black;
+    border-width: 2px;
+    height: 25px;
+    margin: 0px;
+}

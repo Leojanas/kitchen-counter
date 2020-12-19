@@ -36,7 +36,10 @@ class Inventory extends Component {
                         {inventory}      
                         </tbody>
                     </table>
+                    <div className='center-div small-group'>
                     <button type='button' onClick={this.handleAddItem}>Add Item</button>
+                    </div>
+
                 </section>
         )
     }
