@@ -5,20 +5,20 @@ import config from '../config';
 class ShoppingList extends Component {
 handleUseShoppingList = () => {
     let items = this.props.shoppingList;
-fetch(config.API_ENDPOINT + '/api/inventory', {
-    method: 'POST',
-    headers: {
-        'Content-Type':'application/json'
-    },
-    body: JSON.stringify(items)
-})
-.then(res => {
-    if(!res.ok){
-        console.log(res)
-    }
-    this.handleClearShoppingList();
-    this.props.handleUpdateInventory();
-})
+    fetch(config.API_ENDPOINT + '/api/inventory', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(items)
+    })
+    .then(res => {
+        if(!res.ok){
+            console.log(res)
+        }
+        this.handleClearShoppingList();
+        this.props.handleUpdateInventory();
+    })
 }
 handleClearShoppingList = () => {
     fetch(config.API_ENDPOINT + '/api/shopping-list',{
