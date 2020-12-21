@@ -12,16 +12,21 @@ Individual items and/or recipes can also be added to a Meal Plan.  This mealplan
 
 ## Screenshots
 ![Home Screen](screenshots/home-screen.png)
+
 This shows the home screen, which gives users instructions on how to use the app. The nav links at the top use React Router to take the user to the other sections of the app.
 
 ![Inventory List](screenshots/inventory-list.png)
+
 This shows the inventory list, which lets the user see and adjust what they currently have on hand.
 
 ![Add Recipe Form](screenshots/add-recipe.png)
+
 This shows the form to add a recipe.
 
 ![Meal Plan](screenshots/mealplan.png)
+
 This shows the mealplan screen, where users can view their meal plan and add items. Recipes are added from the recipe list screen.
 
 ![Shopping List](screenshots/shopping-list.png)
+
 This shows the shopping list screen, where users can see all the items they need to buy to be able to use their entire mealplan.
