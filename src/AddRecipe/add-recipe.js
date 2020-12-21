@@ -14,14 +14,15 @@ class AddRecipe extends Component {
                 rating: 0,
                 ingredients: [{
                     item_name: '',
-                    qty: '',
-                    unit: ''
+                    qty: 0,
+                    unit: 'pounds'
                 }],
                 instructions: [{
                     number: 1,
                     content: ''
                 }]
-            }
+            },
+            error: false
         }
     }
     handleChange = (event) => {
@@ -31,11 +32,14 @@ class AddRecipe extends Component {
         recipe[field] = value;
         this.setState({recipe})
     }
+    handleClickBack = () => {
+        this.props.history.push('/recipes')
+    }
     handleAddIngredient = () => {
         let emptyIngredient = {
             item_name: '',
             qty: 0,
-            unit: ''
+            unit: 'pounds'
         }
         let ingredients = this.state.recipe.ingredients;
         ingredients.push(emptyIngredient); 
@@ -110,6 +114,9 @@ class AddRecipe extends Component {
     }
     handleAddRecipe = (e) => {
         e.preventDefault();
+        if(this.state.recipe.recipe_name === '' || this.state.recipe.ingredients[0].item_name === ''){
+            this.setState({error: true})
+        }else{
         let recipe = Helpers.stringifyRecipeInstructions(this.state.recipe)
         fetch(config.API_ENDPOINT + '/api/recipes', {
             method: 'POST',
@@ -120,15 +127,26 @@ class AddRecipe extends Component {
         })
         .then(res => {
             if(!res.ok){
-                //error handling
+                this.setState({error: true})
             }
-            this.props.handleUpdateRecipes()
-            this.props.history.push('/recipes')
+            else{
+                this.props.handleUpdateRecipes()
+                this.props.history.push('/recipes')
+            }
         })
+        }
     }
     render() {
         let formIngredients;
         let formInstructions;
+        let error;
+        if(this.state.error){
+            error = (
+                <div className='center-div'>
+                    <p>Invalid submission.  Make sure that recipe name is filled out and it has at least one complete ingredient.</p>
+                </div>
+            )
+        }
         formIngredients = this.state.recipe.ingredients.map((i, index) => {
             return <FormIngredient 
                 item={i} 
@@ -138,14 +156,17 @@ class AddRecipe extends Component {
                 handleRemoveIngredient={this.handleRemoveIngredient}
                 />
         })
+        if(Array.isArray(this.state.recipe.instructions)){
         formInstructions = this.state.recipe.instructions.map((i, index) => {
             return (
-                <tr key={index}>
-                <td>Step {i.number}</td>
-                <td><input id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/></td>
-                </tr>
+                <div className='group' key={index}>
+                <p className='item'>Step {i.number}</p>
+                <textarea className='large-item' id={`instructions-${i.number}-content`} value={i.content} onChange={this.handleUpdateInstruction}/>
+                <button className='item' type='button' id={`remove-${i.number}`} onClick={this.handleRemoveStep}>Remove</button>
+                </div>
             )
         })
+        }
         return(
                 <form onSubmit={this.handleAddRecipe}>
                     <div className='form-group'>
@@ -168,7 +189,7 @@ class AddRecipe extends Component {
                             <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
                         </div>
                     </div>
-                    <fieldset>
+                    <fieldset className='form-fieldset'>
                         <legend>Ingredients</legend>
                         <table>
                         <thead>
@@ -184,16 +205,16 @@ class AddRecipe extends Component {
                     </table>
                     <button type='button' onClick={this.handleAddIngredient}>Add Ingredient</button>
                     </fieldset>
-                    <fieldset>
+                    <fieldset className='form-fieldset'>
                         <legend>Instructions</legend>
-                        <table>
-                            <tbody>
-                                {formInstructions}
-                            </tbody>
-                        </table>
+                            {formInstructions}
                         <button type='button' onClick={this.handleAddStep}>Add Step</button>
                     </fieldset>
-                    <button type='submit'>Save Recipe</button>
+                    {error}
+                    <div className='center-div small-group'>
+                        <button type='submit'>Save Recipe</button>
+                        <button type='button' onClick={this.handleClickBack}>Back</button>
+                    </div>
                 </form>
         )
     }

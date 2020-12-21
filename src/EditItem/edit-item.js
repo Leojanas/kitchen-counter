@@ -35,22 +35,28 @@ class EditItem extends Component {
             <div>
                 <h2>Edit Item</h2>
                 <form onSubmit={this.handleEditItem}>
-                    <h3>{item.item_name}</h3>
-                    <label htmlFor='qty'>Quantity: </label>
-                    <input id='qty' name='qty' defaultValue={item.qty}/>
-                    <select name='unit' id='unit' defaultValue={item.unit}>
-                            <option value='pounds'>pounds</option>
-                            <option value='ounces'>ounces</option>
-                            <option value='gallons'>gallons</option>
-                            <option value='quarts'>quarts</option>
-                            <option value='pints'>pints</option>
-                            <option value='cups'>cups</option>
-                            <option value='tablespoons'>tablespoons</option>
-                            <option value='teaspoons'>teaspoons</option>
-                            <option value='each'>each</option>
-                        </select>
+                    <h4 className='center'>{item.item_name}</h4>
+                    <div className='form-group'>
+                        <div className='form-item'>
+                            <label htmlFor='qty'>Quantity: </label>
+                            <input id='qty' name='qty' defaultValue={item.qty}/>
+                        </div>
+                        <div className='form-item'>
+                            <select name='unit' id='unit' defaultValue={item.unit}>
+                                <option value='pounds'>pounds</option>
+                                <option value='ounces'>ounces</option>
+                                <option value='gallons'>gallons</option>
+                                <option value='quarts'>quarts</option>
+                                <option value='pints'>pints</option>
+                                <option value='cups'>cups</option>
+                                <option value='tablespoons'>tablespoons</option>
+                                <option value='teaspoons'>teaspoons</option>
+                                <option value='each'>each</option>
+                            </select>
+                        </div>
+                    </div>
                     <br />
-                    <div>
+                    <div className='center-div small-group'>
                         <button type='button' onClick={this.handleClickBack}>Back</button>
                         <button type='submit'>Save</button>
                     </div>

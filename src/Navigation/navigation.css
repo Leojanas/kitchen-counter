@@ -11,16 +11,16 @@
     padding: 0px;
     margin: 0px;
 }
-a:link {
+.link:link {
     color: white;
 }
-a:visited {
+.link:visited {
     color: white;
 }
-a:hover {
+.link:hover {
     color: #86bfff;
 }
-a:active{
+.link:active{
     color: black;
 }
 

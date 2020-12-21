@@ -21,6 +21,9 @@ class EditRecipe extends Component {
             recipe
         })
     }
+    handleClickBack = () => {
+        this.props.history.push('/recipes')
+    }
     handleChange = (event) => {
         let field = event.target.id;
         let value = event.target.value;
@@ -166,8 +169,7 @@ class EditRecipe extends Component {
                             <input id='rating' name='rating' value={this.state.recipe.rating} onChange={this.handleChange}/>
                         </div>
                     </div>
-
-                    <fieldset>
+                    <fieldset className='form-fieldset'>
                         <legend>Ingredients</legend>
                         <table>
                         <thead>
@@ -183,12 +185,13 @@ class EditRecipe extends Component {
                     </table>
                     <button type='button' onClick={this.handleAddIngredient}>Add Ingredient</button>
                     </fieldset>
-                    <fieldset>
+                    <fieldset className='form-fieldset'>
                         <legend>Instructions</legend>
                             {formInstructions}
                         <button type='button' onClick={this.handleAddStep}>Add Step</button>
                     </fieldset>
                     <div className='center-div small-group'>
+                        <button type='button' onClick={this.handleClickBack}>Back</button>
                         <button type='submit'>Save Recipe</button>
                     </div>
                 </form>

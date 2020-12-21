@@ -51,6 +51,14 @@ button a:active{
     flex-direction: row;
     justify-content: center;
 }
+.form-fieldset{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#rating{
+    width: 50px;
+}
 @media screen and (min-width: 500px){
     table{
         margin-left: auto;
@@ -59,4 +67,8 @@ button a:active{
     .center-div button{
         margin: 10px;
     }
+    .form-fieldset{
+        width: 500px;
+    }
 }
+

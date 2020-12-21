@@ -10,15 +10,10 @@
     height: 25px;
 }
 .large-item{
-    flex: 1 1 200px;
+    flex: 1 1 100px;
 }
 @media screen and (min-width: 400px){
     .item{
         margin: 10px;
-    }
-}
-@media screen and (min-width: 700px){
-    .large-item{
-        flex: 0 0 570px;
     }
 }
